@@ -20,6 +20,7 @@ use anyhow::{Context, Result, bail};
 use serde_json::Value;
 use std::collections::{HashMap, HashSet};
 use std::io::{Read, Write};
+use std::os::unix::fs::MetadataExt;
 use std::os::unix::net::UnixStream;
 use std::time::Duration;
 
@@ -538,15 +539,24 @@ pub fn build(
                 if stopped {
                     return;
                 }
+                // Rootful logs are owned by root (and usually not even stat-able by others).
+                let root = std::fs::metadata(&log_path).map(|m| m.uid() == 0).unwrap_or(true);
                 e.reclaim = Some(Reclaim {
                     risk: Risk::Review,
                     reason: format!(
-                        "{} container log with no size limit; truncate it (`truncate -s 0 {log_path}`) or recreate the \
-                         container with `--log-opt max-size=50m --log-opt max-file=3` (or set log-opts in daemon.json)",
+                        "{} container log with no size limit; truncating it keeps the container running. To stop it \
+                         growing back, recreate the container with `--log-opt max-size=50m --log-opt max-file=3` (or \
+                         set log-opts in daemon.json)",
                         fmt_size(size)
                     ),
                     estimate: None,
-                    action: None,
+                    action: Some(ActionSpec {
+                        label: format!("truncate {name} log"),
+                        steps: vec![ActionStep::Command {
+                            argv: vec!["truncate".into(), "-s".into(), "0".into(), log_path.clone()],
+                            root,
+                        }],
+                    }),
                 });
             });
         }
@@ -1001,10 +1011,13 @@ mod tests {
         assert!(running.reclaim.is_none());
         assert_eq!(running.paths.iter().filter(|p| p.contains("/snapshots/")).count(), 2);
 
-        // Big log of a running container: review, no automatic action.
+        // Big log of a running container: review, truncated in place.
         let log = find("tracker-poller-1 log");
         let r = log.reclaim.as_ref().unwrap();
-        assert!(r.action.is_none() && r.reason.contains("max-size"));
+        assert!(r.reason.contains("max-size"));
+        let ActionStep::Command { argv, .. } = &r.action.as_ref().unwrap().steps[0] else { panic!() };
+        assert_eq!(argv[..3], ["truncate", "-s", "0"]);
+        assert!(argv[3].ends_with("-json.log"));
         assert_eq!(log.measured_alloc, 4 << 30);
 
         // Volumes: unused → review with a data warning; used ones untouched.
@@ -1094,7 +1107,8 @@ mod tests {
         assert_eq!(web.measured_alloc, 2 * mb + 4096 + 300 * mb);
         assert!(web.reclaim.is_none());
         let log = find("web log");
-        assert!(log.reclaim.as_ref().unwrap().action.is_none());
+        let step = &log.reclaim.as_ref().unwrap().action.as_ref().unwrap().steps[0];
+        assert!(matches!(step, ActionStep::Command { argv, .. } if argv[0] == "truncate"));
         let job = find("job");
         let step = &job.reclaim.as_ref().unwrap().action.as_ref().unwrap().steps[0];
         assert_eq!(

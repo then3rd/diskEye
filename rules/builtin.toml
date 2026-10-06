@@ -20,7 +20,8 @@
 # risk:   safe | review | danger
 # action: none | empty (delete contents) | trash | delete | command
 #   command: argv (`{path}` = matched path), `root = true` if it needs root,
-#   `requires = "prog"` to offer it only when installed.
+#   `requires = "prog"` to offer it only when installed, `fallback = [...]`
+#   for a command to use instead when it is not.
 
 # ------------------------------------------------------------ Package caches
 
@@ -35,6 +36,7 @@ action = "command"
 command = ["paccache", "-rk2"]
 root = true
 requires = "paccache"
+fallback = ["pacman", "-Sc", "--noconfirm"]
 estimate = "paccache"
 
 [[path]]
@@ -272,8 +274,11 @@ name = "LM Studio models"
 group = "AI models"
 kind = "models"
 risk = "review"
-reason = "downloaded models"
-paths = ["~/.lmstudio/models", "~/.cache/lm-studio/models"]
+reason = "downloaded model; re-download it from LM Studio if you need it again"
+# models/<publisher>/<model>: one row per model so they can be removed individually.
+paths = ["~/.lmstudio/models/*", "~/.cache/lm-studio/models/*"]
+split = true
+action = "trash"
 
 [[path]]
 name = "PyTorch hub cache"

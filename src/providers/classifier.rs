@@ -233,6 +233,9 @@ pub struct Rule {
     #[serde(default)]
     pub root: bool,
     pub requires: Option<String>,
+    /// Command to use instead when `requires` is not installed.
+    #[serde(default)]
+    pub fallback: Vec<String>,
     /// `chmod -R u+w` before emptying (read-only caches such as Go modules).
     #[serde(default)]
     pub writable: bool,
@@ -347,22 +350,23 @@ fn reclaim_for(rule: &Rule, env: &Env, nodes: &[NodeId], match_paths: &[String],
     let steps: Vec<ActionStep> = match rule.action {
         RuleAction::None => vec![],
         RuleAction::Command => {
-            let ok = !rule.command.is_empty() && rule.requires.as_deref().is_none_or(|p| (env.has)(p));
-            if !ok {
+            let command =
+                if rule.requires.as_deref().is_none_or(|p| (env.has)(p)) { &rule.command } else { &rule.fallback };
+            if command.is_empty() {
                 if let Some(p) = &rule.requires {
                     reason.push_str(&format!(" (install {p} for a cleanup command)"));
                 }
                 vec![]
-            } else if rule.command.iter().any(|a| a.contains("{path}")) {
+            } else if command.iter().any(|a| a.contains("{path}")) {
                 match_paths
                     .iter()
                     .map(|p| ActionStep::Command {
-                        argv: rule.command.iter().map(|a| a.replace("{path}", p)).collect(),
+                        argv: command.iter().map(|a| a.replace("{path}", p)).collect(),
                         root: rule.root,
                     })
                     .collect()
             } else {
-                vec![ActionStep::Command { argv: rule.command.clone(), root: rule.root }]
+                vec![ActionStep::Command { argv: command.clone(), root: rule.root }]
             }
         }
         RuleAction::Empty | RuleAction::Trash | RuleAction::Delete => {
@@ -387,10 +391,10 @@ fn reclaim_for(rule: &Rule, env: &Env, nodes: &[NodeId], match_paths: &[String],
             steps
         }
     };
-    let label = match rule.action {
-        RuleAction::Command => rule.command.join(" "),
-        RuleAction::Empty => format!("empty {}", rule.name),
-        RuleAction::Trash => format!("move {} to trash", rule.name),
+    let label = match (rule.action, steps.first()) {
+        (RuleAction::Command, Some(ActionStep::Command { argv, .. })) => argv.join(" "),
+        (RuleAction::Empty, _) => format!("empty {}", rule.name),
+        (RuleAction::Trash, _) => format!("move {} to trash", rule.name),
         _ => format!("delete {}", rule.name),
     };
     Reclaim {
@@ -554,15 +558,27 @@ fn apply_path_rule(snap: &mut Snapshot, env: &Env, ctx: &Ctx, rule: &Rule, claim
         let mut rule = rule.clone();
         let estimate = match rule.estimate.as_deref() {
             Some("paccache") => {
-                let old: u64 = nodes.iter().map(|&n| paccache_estimate(tree, n, 2)).sum();
+                // Without paccache the fallback is `pacman -Sc`, which keeps one version, not two.
+                let keep = if (env.has)("paccache") { 2 } else { 1 };
+                let old: u64 = nodes.iter().map(|&n| paccache_estimate(tree, n, keep)).sum();
                 if old == 0 {
                     // Nothing old to prune: the cache holds only current versions.
                     rule.risk = RuleRisk::Review;
                     rule.reason =
                         "cached copies of installed packages; only needed to downgrade or reinstall offline".into();
                     rule.command = vec!["paccache".into(), "-rk0".into()];
+                    // `pacman -Scc --noconfirm` answers its own prompt with "no", so delete the packages directly.
+                    rule.fallback =
+                        ["find", "{path}", "-maxdepth", "1", "-type", "f", "-name", "*.pkg.tar*", "-delete"]
+                            .map(String::from)
+                            .to_vec();
                     None
                 } else {
+                    if keep == 1 {
+                        rule.reason = "old package versions; pacman -Sc keeps only the installed version of each \
+                                       (install paccache to keep the two newest)"
+                            .into();
+                    }
                     Some(old)
                 }
             }
@@ -953,12 +969,43 @@ mod tests {
     }
 
     #[test]
-    fn paccache_missing_means_no_action() {
+    fn paccache_missing_falls_back_to_pacman() {
         let mut snap = sample();
         run(&mut snap, &FakeRunner::default());
         let r = find(&snap, "pacman package cache").reclaim.clone().unwrap();
-        assert!(r.action.is_none());
+        assert_eq!(
+            r.action.unwrap().steps,
+            vec![ActionStep::Command { argv: vec!["pacman".into(), "-Sc".into(), "--noconfirm".into()], root: true }]
+        );
         assert!(r.reason.contains("install paccache"));
+    }
+
+    #[test]
+    fn pacman_cache_without_old_versions_or_paccache() {
+        let mut snap = snap_from(&[
+            ("/var/cache/pacman/pkg/linux-6.1-1-x86_64.pkg.tar.zst", 100 * MB),
+            ("/var/cache/pacman/pkg/glibc-2.40-1-x86_64.pkg.tar.zst", 10 * MB),
+        ]);
+        run(&mut snap, &FakeRunner::default());
+        let r = find(&snap, "pacman package cache").reclaim.clone().unwrap();
+        let ActionStep::Command { argv, root: true } = &r.action.unwrap().steps[0] else { panic!() };
+        assert_eq!(argv[..2], ["find", "/var/cache/pacman/pkg"]);
+        assert_eq!(argv.last().unwrap(), "-delete");
+    }
+
+    #[test]
+    fn lm_studio_models_are_trashed_one_by_one() {
+        let mut snap = snap_from(&[
+            ("/home/u/.lmstudio/models/unsloth/Qwen-GGUF/q4.gguf", 900 * MB),
+            ("/home/u/.lmstudio/models/unsloth/Llama-GGUF/q8.gguf", 600 * MB),
+        ]);
+        run(&mut snap, &FakeRunner::default());
+        let qwen = snap.entities.iter().find(|e| e.name.ends_with("unsloth/Qwen-GGUF")).unwrap();
+        assert_eq!(
+            qwen.reclaim.as_ref().unwrap().action.as_ref().unwrap().steps,
+            vec![ActionStep::DeletePath { path: "/home/u/.lmstudio/models/unsloth/Qwen-GGUF".into(), trash: true }]
+        );
+        assert!(snap.entities.iter().any(|e| e.name.ends_with("unsloth/Llama-GGUF")));
     }
 
     #[test]
