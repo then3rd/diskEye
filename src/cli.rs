@@ -272,7 +272,18 @@ pub fn main() -> Result<()> {
         #[cfg(feature = "web")]
         Some(Cmd::Serve { snapshot, port, no_open }) => {
             let (snap, path) = interactive_snapshot(snapshot, &cli.scan)?;
-            crate::web::serve(snap, path, port, !no_open)?;
+            let args = cli.scan.clone();
+            let rescanner: crate::web::api::Rescanner = std::sync::Arc::new(move || {
+                eprintln!("re-scanning (requested from the web UI)…");
+                let res = scan_and_save(&args, None, true, true, DEFAULT_KEEP);
+                match &res {
+                    Ok((_, Some(p))) => eprintln!("re-scan done, snapshot saved to {}", p.display()),
+                    Ok(_) => eprintln!("re-scan done"),
+                    Err(e) => eprintln!("re-scan failed: {e:#}"),
+                }
+                res
+            });
+            crate::web::serve(snap, path, port, !no_open, Some(rescanner))?;
         }
         Some(Cmd::Diff { old, new, threshold, json }) => {
             let threshold = crate::providers::parse_size(&threshold).context("bad --threshold")?;

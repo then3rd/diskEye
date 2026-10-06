@@ -43,7 +43,10 @@ pub fn load(path: &Path) -> Result<Snapshot> {
     }
     let mut bytes = Vec::new();
     zstd::Decoder::new(r)?.read_to_end(&mut bytes)?;
-    postcard::from_bytes(&bytes).context("decoding snapshot")
+    let mut snap: Snapshot = postcard::from_bytes(&bytes).context("decoding snapshot")?;
+    // Older snapshots list an LV once per lvm segment (lvs are sorted by vg/name).
+    snap.lvm.lvs.dedup_by(|a, b| a.vg == b.vg && a.name == b.name);
+    Ok(snap)
 }
 
 /// `$XDG_STATE_HOME/diskeye/snapshots` (falls back to `~/.local/state`). Under sudo

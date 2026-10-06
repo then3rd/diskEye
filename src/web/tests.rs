@@ -359,3 +359,43 @@ async fn diff_rejects_bad_names() {
     let (s, _) = call(&f, "GET", "/api/diff?against=x.dkeye&threshold=lots", None, true).await;
     assert_eq!(s, StatusCode::BAD_REQUEST);
 }
+
+#[tokio::test]
+async fn rescan_swaps_the_snapshot() {
+    let f = fixture(false);
+    let fresh = f.state.snap.clone();
+    let rescanner: super::api::Rescanner =
+        Arc::new(move || Ok((Snapshot { entities: fresh.entities[..1].to_vec(), ..fresh.clone() }, None)));
+    let app = super::router_with(super::api::Server::new(f.state.clone(), Some(rescanner)));
+    let send = |method: &str| {
+        let req = Request::builder().method(method).uri("/api/rescan").header("x-diskeye-token", TOKEN);
+        app.clone().oneshot(req.body(Body::empty()).unwrap())
+    };
+    let json = |resp: axum::response::Response| async move {
+        serde_json::from_slice::<Value>(&axum::body::to_bytes(resp.into_body(), 1 << 20).await.unwrap()).unwrap()
+    };
+    let resp = send("POST").await.unwrap();
+    assert_eq!(resp.status(), StatusCode::ACCEPTED);
+    let mut status = Value::Null;
+    for _ in 0..200 {
+        status = json(send("GET").await.unwrap()).await;
+        if status["running"] == false {
+            break;
+        }
+        tokio::time::sleep(std::time::Duration::from_millis(10)).await;
+    }
+    assert_eq!(status["generation"], 1, "{status}");
+    assert!(status["error"].is_null());
+    let req = Request::get("/api/summary").header("x-diskeye-token", TOKEN);
+    let s = json(app.clone().oneshot(req.body(Body::empty()).unwrap()).await.unwrap()).await;
+    assert_eq!(s["counts"]["entities"], 1);
+}
+
+#[tokio::test]
+async fn rescan_unavailable_without_rescanner() {
+    let f = fixture(false);
+    let (s, v) = call(&f, "POST", "/api/rescan", None, true).await;
+    assert_eq!(s, StatusCode::NOT_IMPLEMENTED);
+    assert_eq!(v["ok"], false);
+    assert_eq!(get(&f, "/api/rescan").await["available"], false);
+}

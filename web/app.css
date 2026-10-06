@@ -104,6 +104,7 @@ code, .mono { font-family: var(--mono); font-size: 12px; }
 .tabs a.on { color: var(--ink); border-bottom-color: var(--accent); }
 .meta { margin-left: auto; color: var(--muted); font-size: 12px; text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .meta b { color: var(--ink-2); font-weight: 600; }
+.rescan { flex: none; }
 
 #banners .banner { padding: 8px 16px; display: flex; gap: 10px; align-items: center; border-bottom: 1px solid var(--border); }
 .banner.root { background: var(--crit-bg); color: var(--critical-ink); font-weight: 600; }
@@ -302,5 +303,6 @@ input[type=text]:focus, select:focus { outline: 2px solid var(--accent); outline
 @media (max-width: 1000px) {
   .top { gap: 10px; }
   .meta { display: none; }
+  .rescan { margin-left: auto; }
   .tabs a { padding: 0 8px; }
 }

@@ -7,7 +7,7 @@ mod tests;
 
 use crate::model::Snapshot;
 use anyhow::{Context, Result};
-use api::AppState;
+use api::{AppState, Rescanner, Server};
 use axum::Router;
 use axum::http::{HeaderValue, StatusCode, Uri, header};
 use axum::response::{IntoResponse, Response};
@@ -20,7 +20,7 @@ use std::sync::Arc;
 #[folder = "web/"]
 struct Assets;
 
-pub fn serve(snap: Snapshot, path: Option<PathBuf>, port: u16, open: bool) -> Result<()> {
+pub fn serve(snap: Snapshot, path: Option<PathBuf>, port: u16, open: bool, rescanner: Option<Rescanner>) -> Result<()> {
     let token = random_token()?;
     let is_root = crate::util::is_root();
     let rt = tokio::runtime::Builder::new_multi_thread().enable_all().build().context("starting tokio runtime")?;
@@ -28,7 +28,7 @@ pub fn serve(snap: Snapshot, path: Option<PathBuf>, port: u16, open: bool) -> Re
         let (listener, port) = bind(port).await?;
         let mut state = AppState::new(snap, path, token.clone(), is_root);
         state.allowed_hosts = vec![format!("127.0.0.1:{port}"), format!("localhost:{port}")];
-        let app = router(Arc::new(state));
+        let app = router_with(Server::new(Arc::new(state), rescanner));
         let url = format!("http://127.0.0.1:{port}/#token={token}");
         if is_root {
             eprintln!(
@@ -45,8 +45,14 @@ pub fn serve(snap: Snapshot, path: Option<PathBuf>, port: u16, open: bool) -> Re
     })
 }
 
-/// The full router; `/api/*` requires the token, static assets don't.
+/// The full router over a fixed snapshot (no rescan).
+#[cfg(test)]
 pub fn router(state: Arc<AppState>) -> Router {
+    router_with(Server::new(state, None))
+}
+
+/// The full router; `/api/*` requires the token, static assets don't.
+pub fn router_with(state: Server) -> Router {
     Router::new()
         .route("/api/summary", get(api::summary))
         .route("/api/physical", get(api::physical))
@@ -61,6 +67,7 @@ pub fn router(state: Arc<AppState>) -> Router {
         .route("/api/deleted-open", get(api::deleted_open))
         .route("/api/snapshots", get(api::snapshots))
         .route("/api/diff", get(api::diff))
+        .route("/api/rescan", get(api::rescan_status).post(api::rescan_start))
         .route("/api/action/{id}/preview", post(api::action_preview))
         .route("/api/action/{id}/execute", post(api::action_execute))
         .route("/api/{*rest}", get(api_not_found).post(api_not_found))

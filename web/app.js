@@ -152,6 +152,40 @@
     return s;
   }
 
+  // ------------------------------------------------------------ rescan
+  const R = { btn: $("#rescan"), gen: null, watching: false };
+  function rescanUI(st) {
+    R.btn.hidden = !st.available;
+    R.btn.disabled = st.running;
+    R.btn.textContent = st.running ? "Scanning…" : "Re-scan";
+    R.btn.title = st.running ? `Scan started ${DK.age(st.started)}; the page reloads when it's done` : "Scan the system again and reload";
+  }
+  async function pollRescan() {
+    const st = await api("rescan");
+    if (R.gen == null) R.gen = st.generation;
+    rescanUI(st);
+    if (st.running) {
+      R.watching = true;
+      setTimeout(() => pollRescan().catch(console.error), 1500);
+    } else if (st.generation !== R.gen) {
+      // Node and entity ids belong to the old snapshot.
+      writeHash({ node: null, entity: null });
+      location.reload();
+    } else if (st.error && R.watching) {
+      R.watching = false;
+      banner("error", "Re-scan failed: " + esc(st.error));
+    }
+  }
+  R.btn.addEventListener("click", async () => {
+    R.btn.disabled = true;
+    try {
+      await api("rescan", { method: "POST" });
+    } catch (e) {
+      if (e.status !== 409) banner("error", "Re-scan failed: " + esc(e.message));
+    }
+    pollRescan().catch(console.error);
+  });
+
   // ------------------------------------------------------------ Overview
   async function overview() {
     const v = $("#view-overview");
@@ -871,4 +905,5 @@
     banner("error", "No access token. Open the full URL printed by <code>diskeye serve</code> (it ends in <code>#token=…</code>).");
   }
   route();
+  if (S.token) pollRescan().catch(console.error);
 })();

@@ -56,7 +56,13 @@ pub fn parse_lvm2(vgs: &str, lvs: &str, pvs: &str) -> Option<LvmInfo> {
                 kname: st(r, "lv_dm_path"),
                 ..Default::default()
             })
-            .collect(),
+            .fold(Vec::<Lv>::new(), |mut lvs, lv| {
+                // `segtype` is a segment field, so lvs emits one row per segment; keep the first.
+                if !lvs.iter().any(|l| l.vg == lv.vg && l.name == lv.name) {
+                    lvs.push(lv);
+                }
+                lvs
+            }),
         pvs: report_rows(&pvs, "pv")
             .into_iter()
             .map(|r| Pv {
@@ -260,5 +266,20 @@ mod tests {
         assert_eq!(info.vgs[0].free, 200);
         assert_eq!(info.lvs[0].data_percent, Some(42.5));
         assert_eq!(info.pvs[0].free, Some(200));
+    }
+
+    #[test]
+    fn merges_multi_segment_lvs() {
+        let vgs = r#"{"report":[{"vg":[{"vg_name":"vg0","vg_size":"1000","vg_free":"200"}]}]}"#;
+        let seg = |lv: &str| {
+            format!(r#"{{"lv_name":"{lv}","vg_name":"vg0","lv_size":"300","lv_attr":"-wi-ao----","segtype":"linear"}}"#)
+        };
+        let lvs =
+            format!(r#"{{"report":[{{"lv":[{},{},{},{}]}}]}}"#, seg("home"), seg("home"), seg("home"), seg("root"));
+        let pvs = r#"{"report":[{"pv":[]}]}"#;
+        let info = parse_lvm2(vgs, &lvs, pvs).unwrap();
+        let names: Vec<&str> = info.lvs.iter().map(|l| l.name.as_str()).collect();
+        assert_eq!(names, ["home", "root"]);
+        assert_eq!(info.lvs[0].size, 300);
     }
 }

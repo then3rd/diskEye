@@ -6,7 +6,7 @@ use crate::model::tree::{Kind, flags};
 use crate::model::{ActionSpec, Coverage, NodeId, Risk, Snapshot, attribution};
 use crate::views::{self, Metric};
 use axum::Json;
-use axum::extract::{Path as AxPath, Query, Request, State};
+use axum::extract::{FromRef, Path as AxPath, Query, Request, State};
 use axum::http::{HeaderValue, StatusCode, header};
 use axum::middleware::Next;
 use axum::response::{IntoResponse, Response};
@@ -14,7 +14,7 @@ use serde::Deserialize;
 use serde_json::{Value, json};
 use std::collections::HashMap;
 use std::path::PathBuf;
-use std::sync::{Arc, Mutex, OnceLock};
+use std::sync::{Arc, Mutex, OnceLock, RwLock};
 
 /// Runs a cleanup action. Injectable so tests don't append to the user's audit log.
 pub type Executor = fn(&ActionSpec, Risk, u64) -> anyhow::Result<()>;
@@ -448,6 +448,105 @@ fn ok(v: &Value) -> Response {
 }
 
 type St = State<Arc<AppState>>;
+
+// ---------------------------------------------------------------- rescan
+
+/// Produces a fresh snapshot (and where it was saved) for `/api/rescan`.
+pub type Rescanner = Arc<dyn Fn() -> anyhow::Result<(Snapshot, Option<PathBuf>)> + Send + Sync>;
+
+/// Router state: the current snapshot's `AppState`, replaced wholesale after a
+/// rescan. Handlers extract `Arc<AppState>` (see `FromRef`), so a request keeps
+/// the snapshot it started with even if a rescan lands meanwhile.
+#[derive(Clone)]
+pub struct Server(Arc<ServerInner>);
+
+struct ServerInner {
+    current: RwLock<Arc<AppState>>,
+    rescanner: Option<Rescanner>,
+    rescan: Mutex<RescanStatus>,
+}
+
+#[derive(Default, Clone, serde::Serialize)]
+struct RescanStatus {
+    available: bool,
+    running: bool,
+    started: Option<i64>,
+    finished: Option<i64>,
+    error: Option<String>,
+    /// Bumped every time a new snapshot is swapped in.
+    generation: u64,
+}
+
+impl Server {
+    pub fn new(state: Arc<AppState>, rescanner: Option<Rescanner>) -> Self {
+        let rescan = RescanStatus { available: rescanner.is_some(), ..Default::default() };
+        Server(Arc::new(ServerInner { current: RwLock::new(state), rescanner, rescan: Mutex::new(rescan) }))
+    }
+
+    pub fn current(&self) -> Arc<AppState> {
+        self.0.current.read().unwrap_or_else(|e| e.into_inner()).clone()
+    }
+
+    fn status(&self) -> std::sync::MutexGuard<'_, RescanStatus> {
+        self.0.rescan.lock().unwrap_or_else(|e| e.into_inner())
+    }
+
+    /// Scan on a background thread and swap the result in; false if one is already running.
+    fn start_rescan(&self, rescanner: Rescanner) -> bool {
+        {
+            let mut s = self.status();
+            if s.running {
+                return false;
+            }
+            s.running = true;
+            s.started = Some(crate::util::now_secs());
+            s.error = None;
+        }
+        let sv = self.clone();
+        std::thread::spawn(move || {
+            let res = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+                let (snap, path) = rescanner()?;
+                let old = sv.current();
+                let mut st = AppState::new(snap, path, old.token.clone(), old.is_root);
+                st.allowed_hosts = old.allowed_hosts.clone();
+                st.executor = old.executor;
+                Ok::<_, anyhow::Error>(st)
+            }));
+            let mut s = sv.status();
+            match res {
+                Ok(Ok(st)) => {
+                    *sv.0.current.write().unwrap_or_else(|e| e.into_inner()) = Arc::new(st);
+                    s.generation += 1;
+                }
+                Ok(Err(e)) => s.error = Some(format!("{e:#}")),
+                Err(_) => s.error = Some("the scan crashed (see the server's terminal)".into()),
+            }
+            s.running = false;
+            s.finished = Some(crate::util::now_secs());
+        });
+        true
+    }
+}
+
+impl FromRef<Server> for Arc<AppState> {
+    fn from_ref(sv: &Server) -> Self {
+        sv.current()
+    }
+}
+
+pub async fn rescan_status(State(sv): State<Server>) -> Response {
+    Json(sv.status().clone()).into_response()
+}
+
+pub async fn rescan_start(State(sv): State<Server>) -> Response {
+    let Some(rescanner) = sv.0.rescanner.clone() else {
+        return err(StatusCode::NOT_IMPLEMENTED, "re-scanning is not available on this server");
+    };
+    if !sv.start_rescan(rescanner) {
+        return err(StatusCode::CONFLICT, "a scan is already running");
+    }
+    (StatusCode::ACCEPTED, Json(sv.status().clone())).into_response()
+}
 
 /// Compute a whole-snapshot view once on a blocking thread, then serve it from memory.
 async fn cached(st: Arc<AppState>, slot: fn(&AppState) -> &OnceLock<Value>, f: fn(&AppState) -> Value) -> Response {
