@@ -13,6 +13,11 @@ build *ARGS:
 run *ARGS:
     {{cargo}} run --release -- {{ARGS}}
 
+# Don't use `sudo just run`: root has no cargo and would leave root-owned files in target/.
+# Build as you, then run diskeye as root for the full picture, e.g. `just sudo serve`
+sudo *ARGS: (build "--release")
+    sudo target/release/diskeye {{ARGS}}
+
 # One-time setup: pre-commit hook, Playwright + Chromium, and VHS for TUI screenshots
 setup:
     command -v pre-commit >/dev/null || uv tool install pre-commit

@@ -11,6 +11,7 @@ diskeye is a Linux disk-usage analyzer (Rust, edition 2024). It builds one model
 ```sh
 just build [--release]          # cargo build
 just run tui                    # cargo run --release -- tui
+just sudo serve                 # build as the user, then run the release binary under sudo (never `sudo just run`)
 cargo test                      # all tests (unit tests live inside src/, there is no tests/*.rs)
 cargo test <name_substring>     # single test, e.g. cargo test parse_lsblk
 cargo test --no-default-features --features tui   # build without the web frontend
