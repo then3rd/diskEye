@@ -8,7 +8,12 @@ pub fn is_root() -> bool {
     euid() == 0
 }
 
+/// Unix seconds now, or `$DISKEYE_NOW` when set (for reproducible screenshots).
 pub fn now_secs() -> i64 {
+    static FIXED: std::sync::OnceLock<Option<i64>> = std::sync::OnceLock::new();
+    if let Some(t) = *FIXED.get_or_init(|| std::env::var("DISKEYE_NOW").ok().and_then(|v| v.parse().ok())) {
+        return t;
+    }
     std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).map(|d| d.as_secs() as i64).unwrap_or(0)
 }
 

@@ -103,6 +103,12 @@ enum Cmd {
     },
     /// List saved snapshots.
     Snapshots,
+    /// Write the made-up demo snapshots used for the README screenshots.
+    #[command(hide = true)]
+    Demo {
+        /// Directory for the snapshots.
+        dir: PathBuf,
+    },
 }
 
 #[derive(Args, Clone, Default)]
@@ -342,6 +348,10 @@ pub fn main() -> Result<()> {
                 let size = std::fs::metadata(&p).map(|m| m.len()).unwrap_or(0);
                 println!("{:>10}  {}", model::fmt_size(size), p.display());
             }
+        }
+        Some(Cmd::Demo { dir }) => {
+            let (path, _) = crate::demo::write(&dir)?;
+            println!("{}", path.display());
         }
     }
     Ok(())

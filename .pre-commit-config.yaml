@@ -1,0 +1,10 @@
+# Install with `just setup`.
+repos:
+  - repo: local
+    hooks:
+      - id: screenshots
+        name: regenerate README screenshots
+        entry: just screenshots
+        language: system
+        pass_filenames: false
+        files: ^(src/|web/|scripts/screenshots/|justfile$)

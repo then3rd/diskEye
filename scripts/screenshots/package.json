@@ -1,0 +1,9 @@
+{
+  "name": "diskeye-screenshots",
+  "private": true,
+  "description": "Web UI screenshots for the README (run via `just screenshots`)",
+  "type": "module",
+  "devDependencies": {
+    "playwright": "1.62.1"
+  }
+}

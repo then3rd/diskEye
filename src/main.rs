@@ -1,5 +1,6 @@
 mod actions;
 mod cli;
+mod demo;
 mod model;
 mod pipeline;
 mod providers;
