@@ -1,0 +1,15 @@
+<pool type='logical'>
+  <name>vg_system</name>
+  <uuid>1352ecbb-7734-4408-97d9-3b3e12a85474</uuid>
+  <capacity unit='bytes'>999125155840</capacity>
+  <allocation unit='bytes'>532575944704</allocation>
+  <available unit='bytes'>466549211136</available>
+  <source>
+    <name>vg_system</name>
+    <format type='lvm2'/>
+  </source>
+  <target>
+    <path>/dev/vg_system</path>
+  </target>
+</pool>
+

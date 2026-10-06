@@ -1,0 +1,43 @@
+[
+ {
+  "Id": "c1web",
+  "Names": [
+   "/web"
+  ],
+  "Image": "app:1",
+  "ImageID": "sha256:aaa1",
+  "Command": "/app",
+  "Created": 1757100000,
+  "State": "running",
+  "Status": "Up 2 days",
+  "SizeRw": 2097152,
+  "SizeRootFs": 106954752,
+  "Mounts": [
+   {
+    "Type": "volume",
+    "Name": "pgdata",
+    "Source": "/var/lib/docker/volumes/pgdata/_data",
+    "Destination": "/var/lib/postgresql/data",
+    "Driver": "local",
+    "Mode": "z",
+    "RW": true,
+    "Propagation": ""
+   }
+  ]
+ },
+ {
+  "Id": "c2job",
+  "Names": [
+   "/job"
+  ],
+  "Image": "app:1",
+  "ImageID": "sha256:aaa1",
+  "Command": "/app",
+  "Created": 1757100000,
+  "State": "exited",
+  "Status": "Exited (0) 3 weeks ago",
+  "SizeRw": 7340032,
+  "SizeRootFs": 112197632,
+  "Mounts": []
+ }
+]

@@ -1,0 +1,38 @@
+{
+ "DockerRootDir": "/var/lib/docker",
+ "Driver": "overlay2",
+ "DriverStatus": [
+  [
+   "Backing Filesystem",
+   "extfs"
+  ],
+  [
+   "Supports d_type",
+   "true"
+  ],
+  [
+   "Using metacopy",
+   "false"
+  ],
+  [
+   "Native Overlay Diff",
+   "true"
+  ],
+  [
+   "userxattr",
+   "false"
+  ]
+ ],
+ "SecurityOptions": [
+  "name=seccomp,profile=builtin",
+  "name=cgroupns"
+ ],
+ "ServerVersion": "27.5.1",
+ "Containerd": {
+  "Address": "/run/containerd/containerd.sock",
+  "Namespaces": {
+   "Containers": "moby",
+   "Plugins": "plugins.moby"
+  }
+ }
+}

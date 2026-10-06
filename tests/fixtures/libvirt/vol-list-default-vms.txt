@@ -1,0 +1,7 @@
+ Name         Path                                 Type   Capacity    Allocation
+----------------------------------------------------------------------------------
+ base.qcow2   /var/lib/libvirt/images/base.qcow2   file   20.00 GiB   2.10 GiB
+ my disk.raw  /var/lib/libvirt/images/my disk.raw  file   10.00 GiB   1.00 GiB
+ web1.qcow2   /var/lib/libvirt/images/web1.qcow2   file   20.00 GiB   200.00 KiB
+ web2.qcow2   /var/lib/libvirt/images/web2.qcow2   file   20.00 GiB   196.00 KiB
+

@@ -1,0 +1,88 @@
+[
+ {
+  "id": "l1base",
+  "created": "2025-09-14T10:22:31.402137841Z",
+  "compressed-diff-digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+  "compressed-size": 2446677,
+  "diff-digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "diff-size": 7340032,
+  "compression": 2,
+  "uidset": [
+   0
+  ],
+  "gidset": [
+   0
+  ]
+ },
+ {
+  "id": "l2nginx",
+  "created": "2025-09-14T10:22:31.402137841Z",
+  "compressed-diff-digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+  "compressed-size": 13981013,
+  "diff-digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "diff-size": 41943040,
+  "compression": 2,
+  "uidset": [
+   0
+  ],
+  "gidset": [
+   0
+  ],
+  "parent": "l1base"
+ },
+ {
+  "id": "l3py",
+  "created": "2025-09-14T10:22:31.402137841Z",
+  "compressed-diff-digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333",
+  "compressed-size": 17476266,
+  "diff-digest": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+  "diff-size": 52428800,
+  "compression": 2,
+  "uidset": [
+   0
+  ],
+  "gidset": [
+   0
+  ],
+  "parent": "l1base"
+ },
+ {
+  "id": "l4old",
+  "created": "2025-09-14T10:22:31.402137841Z",
+  "compressed-diff-digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+  "compressed-size": 1048576,
+  "diff-digest": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+  "diff-size": 3145728,
+  "compression": 2,
+  "uidset": [
+   0
+  ],
+  "gidset": [
+   0
+  ]
+ },
+ {
+  "id": "rwweb",
+  "parent": "l2nginx",
+  "created": "2025-09-20T08:00:00Z",
+  "mountlabel": "",
+  "uidmap": [
+   {
+    "container_id": 0,
+    "host_id": 1000,
+    "size": 1
+   },
+   {
+    "container_id": 1,
+    "host_id": 100000,
+    "size": 65536
+   }
+  ]
+ },
+ {
+  "id": "rwjob",
+  "parent": "l2nginx",
+  "created": "2025-09-21T08:00:00Z",
+  "mountlabel": ""
+ }
+]

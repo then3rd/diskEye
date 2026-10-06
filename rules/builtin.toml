@@ -1,0 +1,554 @@
+# Built-in classifier rules for diskeye.
+#
+# Users can add or override rules in ~/.config/diskeye/rules.toml using the
+# same format. A user rule with the same `name` as a built-in one replaces
+# it; `disable = ["name", ...]` turns built-in rules off.
+#
+# [[path]] rules: `paths` are absolute globs (`*`, `?` within one component).
+#   `~` expands to each inspected user's home, `{mount}` to every scanned
+#   mountpoint, `{kernel}` to the running kernel release.
+#   Rules are applied in order; a path claimed by an earlier rule (or by an
+#   earlier provider such as docker or libvirt) is never claimed again.
+#   `split = true` reports one child per entry of the matched directory and
+#   is meant for catch-alls such as "the rest of ~/.cache".
+# [[dir]] rules: directories named one of `names`, anywhere in the scanned
+#   tree (outside system directories and hidden directories), optionally
+#   requiring a `sibling` or a `contains` entry (`names = ["*"]` with
+#   `contains` matches by content alone). Matches nested inside other
+#   matches are skipped. `aggregate = true` reports all matches as one entity.
+#
+# risk:   safe | review | danger
+# action: none | empty (delete contents) | trash | delete | command
+#   command: argv (`{path}` = matched path), `root = true` if it needs root,
+#   `requires = "prog"` to offer it only when installed.
+
+# ------------------------------------------------------------ Package caches
+
+[[path]]
+name = "pacman package cache"
+group = "Package caches"
+kind = "pkgcache"
+risk = "safe"
+reason = "old package versions; paccache -rk2 keeps the two newest of each"
+paths = ["/var/cache/pacman/pkg"]
+action = "command"
+command = ["paccache", "-rk2"]
+root = true
+requires = "paccache"
+estimate = "paccache"
+
+[[path]]
+name = "yay build cache"
+group = "Package caches"
+kind = "pkgcache"
+risk = "safe"
+reason = "AUR helper build cache, re-downloaded on demand"
+paths = ["~/.cache/yay"]
+action = "empty"
+
+[[path]]
+name = "paru build cache"
+group = "Package caches"
+kind = "pkgcache"
+risk = "safe"
+reason = "AUR helper build cache, re-downloaded on demand"
+paths = ["~/.cache/paru"]
+action = "empty"
+
+[[path]]
+name = "apt package cache"
+group = "Package caches"
+kind = "pkgcache"
+risk = "safe"
+reason = "downloaded .deb files"
+paths = ["/var/cache/apt/archives"]
+action = "command"
+command = ["apt-get", "clean"]
+root = true
+requires = "apt-get"
+
+[[path]]
+name = "dnf package cache"
+group = "Package caches"
+kind = "pkgcache"
+risk = "safe"
+reason = "downloaded packages and repo metadata"
+paths = ["/var/cache/dnf", "/var/cache/yum"]
+action = "command"
+command = ["dnf", "clean", "all"]
+root = true
+requires = "dnf"
+
+[[path]]
+name = "zypper package cache"
+group = "Package caches"
+kind = "pkgcache"
+risk = "safe"
+reason = "downloaded packages"
+paths = ["/var/cache/zypp/packages"]
+action = "command"
+command = ["zypper", "clean", "--all"]
+root = true
+requires = "zypper"
+
+# ------------------------------------------------------------ Developer caches
+
+[[path]]
+name = "pip cache"
+group = "Developer caches"
+kind = "devcache"
+risk = "safe"
+reason = "downloaded wheels, re-fetched on demand"
+paths = ["~/.cache/pip", "~/.cache/pypoetry/cache", "~/.cache/pypoetry/artifacts"]
+action = "empty"
+
+[[path]]
+name = "uv cache"
+group = "Developer caches"
+kind = "devcache"
+risk = "safe"
+reason = "uv package cache, re-fetched on demand"
+paths = ["~/.cache/uv"]
+action = "command"
+command = ["uv", "cache", "clean"]
+requires = "uv"
+
+[[path]]
+name = "npm cache"
+group = "Developer caches"
+kind = "devcache"
+risk = "safe"
+reason = "npm download cache, re-fetched on demand"
+paths = ["~/.npm/_cacache"]
+action = "empty"
+
+[[path]]
+name = "yarn cache"
+group = "Developer caches"
+kind = "devcache"
+risk = "safe"
+reason = "yarn download cache, re-fetched on demand"
+paths = ["~/.cache/yarn", "~/.yarn/berry/cache"]
+action = "empty"
+
+[[path]]
+name = "pnpm store"
+group = "Developer caches"
+kind = "devcache"
+risk = "review"
+reason = "content-addressed store shared by pnpm projects; `pnpm store prune` removes unreferenced packages"
+paths = ["~/.local/share/pnpm/store"]
+action = "command"
+command = ["pnpm", "store", "prune"]
+requires = "pnpm"
+
+[[path]]
+name = "cargo registry"
+group = "Developer caches"
+kind = "devcache"
+risk = "review"
+reason = "downloaded crates and git checkouts; re-fetched on the next build (slow offline)"
+paths = ["~/.cargo/registry", "~/.cargo/git"]
+action = "empty"
+
+[[path]]
+name = "Go build cache"
+group = "Developer caches"
+kind = "devcache"
+risk = "safe"
+reason = "compiler output cache, rebuilt on demand"
+paths = ["~/.cache/go-build"]
+action = "empty"
+
+[[path]]
+name = "Go module cache"
+group = "Developer caches"
+kind = "devcache"
+risk = "review"
+reason = "downloaded Go modules (read-only files); re-fetched on the next build"
+paths = ["~/go/pkg/mod"]
+action = "empty"
+writable = true
+
+[[path]]
+name = "ccache"
+group = "Developer caches"
+kind = "devcache"
+risk = "safe"
+reason = "C/C++ compiler cache, rebuilt on demand"
+paths = ["~/.cache/ccache", "~/.ccache"]
+action = "empty"
+
+[[path]]
+name = "sccache"
+group = "Developer caches"
+kind = "devcache"
+risk = "safe"
+reason = "compiler cache, rebuilt on demand"
+paths = ["~/.cache/sccache"]
+action = "empty"
+
+[[path]]
+name = "Gradle caches"
+group = "Developer caches"
+kind = "devcache"
+risk = "review"
+reason = "downloaded dependencies and Gradle distributions; re-fetched on the next build"
+paths = ["~/.gradle/caches", "~/.gradle/wrapper/dists"]
+action = "empty"
+
+[[path]]
+name = "Maven repository"
+group = "Developer caches"
+kind = "devcache"
+risk = "review"
+reason = "downloaded Maven artifacts; re-fetched on the next build (locally installed artifacts are lost)"
+paths = ["~/.m2/repository"]
+action = "empty"
+
+[[path]]
+name = "JetBrains IDE caches"
+group = "Developer caches"
+kind = "devcache"
+risk = "safe"
+reason = "IDE indexes and caches, rebuilt on the next start"
+paths = ["~/.cache/JetBrains"]
+action = "empty"
+
+[[path]]
+name = "VS Code caches"
+group = "Developer caches"
+kind = "devcache"
+risk = "safe"
+reason = "editor caches and downloaded extension packages"
+paths = [
+    "~/.config/Code/Cache",
+    "~/.config/Code/CachedData",
+    "~/.config/Code/CachedExtensionVSIXs",
+    "~/.config/Code - OSS/Cache",
+    "~/.config/Code - OSS/CachedData",
+    "~/.config/VSCodium/Cache",
+    "~/.config/VSCodium/CachedData",
+    "~/.config/Cursor/Cache",
+    "~/.config/Cursor/CachedData",
+]
+action = "empty"
+
+[[path]]
+name = "Electron app caches"
+group = "App caches"
+kind = "cache"
+risk = "safe"
+reason = "Chromium-based app caches (Discord, Slack, ...), rebuilt on demand"
+paths = [
+    "~/.config/*/Cache",
+    "~/.config/*/Code Cache",
+    "~/.config/*/GPUCache",
+    "~/.config/*/Service Worker/CacheStorage",
+]
+action = "empty"
+
+# ------------------------------------------------------------ AI models
+
+[[path]]
+name = "Hugging Face cache"
+group = "AI models"
+kind = "models"
+risk = "review"
+reason = "downloaded models and datasets; re-downloaded on next use"
+paths = ["~/.cache/huggingface"]
+action = "empty"
+
+[[path]]
+name = "Ollama models"
+group = "AI models"
+kind = "models"
+risk = "review"
+reason = "downloaded models; remove individual ones with `ollama rm`"
+paths = ["~/.ollama/models", "/usr/share/ollama/.ollama/models", "/var/lib/ollama"]
+
+[[path]]
+name = "LM Studio models"
+group = "AI models"
+kind = "models"
+risk = "review"
+reason = "downloaded models"
+paths = ["~/.lmstudio/models", "~/.cache/lm-studio/models"]
+
+[[path]]
+name = "PyTorch hub cache"
+group = "AI models"
+kind = "models"
+risk = "review"
+reason = "downloaded model weights; re-downloaded on next use"
+paths = ["~/.cache/torch"]
+action = "empty"
+
+# ------------------------------------------------------------ Browser caches
+
+[[path]]
+name = "Google Chrome cache"
+group = "Browser caches"
+kind = "cache"
+risk = "safe"
+reason = "browser disk cache, rebuilt while browsing"
+paths = ["~/.cache/google-chrome", "~/.cache/google-chrome-beta", "~/.cache/google-chrome-unstable"]
+action = "empty"
+
+[[path]]
+name = "Chromium cache"
+group = "Browser caches"
+kind = "cache"
+risk = "safe"
+reason = "browser disk cache, rebuilt while browsing"
+paths = ["~/.cache/chromium"]
+action = "empty"
+
+[[path]]
+name = "Brave cache"
+group = "Browser caches"
+kind = "cache"
+risk = "safe"
+reason = "browser disk cache, rebuilt while browsing"
+paths = ["~/.cache/BraveSoftware"]
+action = "empty"
+
+[[path]]
+name = "Microsoft Edge cache"
+group = "Browser caches"
+kind = "cache"
+risk = "safe"
+reason = "browser disk cache, rebuilt while browsing"
+paths = ["~/.cache/microsoft-edge", "~/.cache/microsoft-edge-beta", "~/.cache/microsoft-edge-dev"]
+action = "empty"
+
+[[path]]
+name = "Vivaldi cache"
+group = "Browser caches"
+kind = "cache"
+risk = "safe"
+reason = "browser disk cache, rebuilt while browsing"
+paths = ["~/.cache/vivaldi"]
+action = "empty"
+
+[[path]]
+name = "Firefox cache"
+group = "Browser caches"
+kind = "cache"
+risk = "safe"
+reason = "browser disk cache, rebuilt while browsing"
+paths = ["~/.cache/mozilla"]
+action = "empty"
+
+[[path]]
+name = "LibreWolf cache"
+group = "Browser caches"
+kind = "cache"
+risk = "safe"
+reason = "browser disk cache, rebuilt while browsing"
+paths = ["~/.cache/librewolf"]
+action = "empty"
+
+# ------------------------------------------------------------ App caches
+
+[[path]]
+name = "Thumbnails"
+group = "App caches"
+kind = "cache"
+risk = "safe"
+reason = "image thumbnails, regenerated by file managers"
+paths = ["~/.cache/thumbnails", "~/.thumbnails"]
+action = "empty"
+
+[[path]]
+name = "GPU shader caches"
+group = "App caches"
+kind = "cache"
+risk = "safe"
+reason = "compiled shaders, rebuilt on demand (first launches stutter briefly)"
+paths = [
+    "~/.cache/mesa_shader_cache",
+    "~/.cache/mesa_shader_cache_db",
+    "~/.cache/nvidia/GLCache",
+    "~/.cache/radv_builtin_shaders",
+    "~/.nv/GLCache",
+    "~/.nv/ComputeCache",
+]
+action = "empty"
+
+[[path]]
+name = "Steam shader caches"
+group = "App caches"
+kind = "cache"
+risk = "safe"
+reason = "per-game compiled shaders, rebuilt by Steam"
+paths = ["~/.local/share/Steam/steamapps/shadercache", "~/.steam/debian-installation/steamapps/shadercache"]
+action = "empty"
+
+[[path]]
+name = "Spotify cache"
+group = "App caches"
+kind = "cache"
+risk = "safe"
+reason = "streamed music cache, re-downloaded on demand"
+paths = ["~/.cache/spotify"]
+action = "empty"
+
+[[path]]
+name = "Flatpak app caches"
+group = "App caches"
+kind = "cache"
+risk = "safe"
+reason = "per-app cache directories of Flatpak apps"
+paths = ["~/.var/app/*/cache"]
+action = "empty"
+
+# ------------------------------------------------------------ Trash
+
+[[path]]
+name = "Trash"
+group = "Trash"
+kind = "trash"
+risk = "review"
+reason = "files you deleted; emptying the trash makes it permanent"
+paths = ["~/.local/share/Trash", "{mount}/.Trash-*"]
+action = "empty"
+
+# ------------------------------------------------------------ System
+
+[[path]]
+name = "/var/tmp"
+group = "Temporary files"
+kind = "tmp"
+risk = "review"
+reason = "temporary files that survive reboots; some may belong to running services"
+paths = ["/var/tmp"]
+
+[[path]]
+name = "Crash reports"
+group = "Logs"
+kind = "crash"
+risk = "safe"
+reason = "crash reports of past application failures"
+paths = ["/var/crash"]
+action = "empty"
+
+[[path]]
+name = "Old kernel modules"
+group = "Old kernels"
+kind = "kernel"
+risk = "review"
+reason = "modules of a kernel that is neither running nor installed (left behind after an upgrade)"
+paths = ["/usr/lib/modules/*", "/lib/modules/*"]
+exclude = ["/usr/lib/modules/{kernel}", "/lib/modules/{kernel}"]
+skip_if_contains = ["vmlinuz"]
+
+[[path]]
+name = "Filesystem snapshots"
+group = "System snapshots"
+kind = "snapshots"
+risk = "review"
+reason = "snapper/timeshift snapshots; remove old ones with snapper or timeshift"
+paths = ["{mount}/.snapshots", "{mount}/timeshift", "{mount}/timeshift-btrfs"]
+
+# ------------------------------------------------------------ Catch-all (keep last)
+
+[[path]]
+name = "Other ~/.cache"
+group = "App caches"
+kind = "cache"
+risk = "review"
+reason = "application cache not covered by a more specific rule; usually regenerated"
+paths = ["~/.cache"]
+split = true
+action = "empty"
+
+# ------------------------------------------------------------ Directory-name rules
+
+[[dir]]
+name = "Rust build artifacts"
+group = "Build artifacts"
+kind = "build-artifacts"
+risk = "review"
+reason = "cargo target directory, rebuilt by `cargo build`"
+names = ["target"]
+sibling = ["Cargo.toml"]
+action = "trash"
+
+[[dir]]
+name = "node_modules"
+group = "Build artifacts"
+kind = "build-artifacts"
+risk = "review"
+reason = "installed JavaScript dependencies, restored by `npm install`"
+names = ["node_modules"]
+action = "trash"
+
+[[dir]]
+name = "Python virtualenvs"
+group = "Build artifacts"
+kind = "build-artifacts"
+risk = "review"
+reason = "Python virtual environment, recreated from the project's requirements"
+names = ["*"]
+contains = ["pyvenv.cfg"]
+action = "trash"
+
+[[dir]]
+name = "Python bytecode (__pycache__)"
+group = "Build artifacts"
+kind = "build-artifacts"
+risk = "safe"
+reason = "compiled bytecode, regenerated on import"
+names = ["__pycache__"]
+action = "delete"
+aggregate = true
+
+[[dir]]
+name = "Python tool caches"
+group = "Build artifacts"
+kind = "build-artifacts"
+risk = "safe"
+reason = "mypy/pytest/ruff caches, regenerated on the next run"
+names = [".mypy_cache", ".pytest_cache", ".ruff_cache"]
+action = "delete"
+aggregate = true
+
+[[dir]]
+name = "Gradle project caches"
+group = "Build artifacts"
+kind = "build-artifacts"
+risk = "safe"
+reason = "per-project Gradle cache, rebuilt by the next build"
+names = [".gradle"]
+sibling = ["build.gradle", "build.gradle.kts", "settings.gradle", "settings.gradle.kts", "gradlew"]
+action = "trash"
+
+[[dir]]
+name = "Terraform plugin caches"
+group = "Build artifacts"
+kind = "build-artifacts"
+risk = "review"
+reason = "downloaded providers and modules, restored by `terraform init`"
+names = [".terraform"]
+action = "trash"
+
+[[dir]]
+name = "Next.js / Nuxt build output"
+group = "Build artifacts"
+kind = "build-artifacts"
+risk = "safe"
+reason = "framework build output and cache, rebuilt by the next build"
+names = [".next", ".nuxt"]
+sibling = ["package.json"]
+action = "trash"
+
+[[dir]]
+name = "CMake build directories"
+group = "Build artifacts"
+kind = "build-artifacts"
+risk = "review"
+reason = "CMake build tree, regenerated by cmake + build"
+names = ["build", "build-*", "cmake-build-*"]
+contains = ["CMakeCache.txt"]
+action = "trash"

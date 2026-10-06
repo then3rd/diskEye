@@ -1,0 +1,95 @@
+[
+ {
+  "Id": "img-alpine",
+  "ParentId": "",
+  "RepoTags": null,
+  "RepoDigests": [
+   "docker.io/library/alpine@sha256:5555555555555555555555555555555555555555555555555555555555555555"
+  ],
+  "Size": 7340032,
+  "SharedSize": 0,
+  "VirtualSize": 7340032,
+  "Labels": null,
+  "Containers": 0,
+  "ReadOnly": false,
+  "Dangling": false,
+  "Names": [
+   "docker.io/library/alpine:3.20"
+  ],
+  "Digest": "sha256:5555555555555555555555555555555555555555555555555555555555555555",
+  "History": [
+   "docker.io/library/alpine:3.20"
+  ],
+  "Created": 1757845355,
+  "CreatedAt": "2025-09-14T10:22:35Z"
+ },
+ {
+  "Id": "img-nginx",
+  "ParentId": "",
+  "RepoTags": null,
+  "RepoDigests": [
+   "docker.io/library/nginx@sha256:6666666666666666666666666666666666666666666666666666666666666666"
+  ],
+  "Size": 49283072,
+  "SharedSize": 0,
+  "VirtualSize": 49283072,
+  "Labels": null,
+  "Containers": 2,
+  "ReadOnly": false,
+  "Dangling": false,
+  "Names": [
+   "docker.io/library/nginx:1.27"
+  ],
+  "Digest": "sha256:6666666666666666666666666666666666666666666666666666666666666666",
+  "History": [
+   "docker.io/library/nginx:1.27"
+  ],
+  "Created": 1757845355,
+  "CreatedAt": "2025-09-14T10:22:35Z"
+ },
+ {
+  "Id": "img-python",
+  "ParentId": "",
+  "RepoTags": null,
+  "RepoDigests": [
+   "docker.io/library/python@sha256:7777777777777777777777777777777777777777777777777777777777777777",
+   "localhost/py@sha256:7777777777777777777777777777777777777777777777777777777777777777"
+  ],
+  "Size": 59768832,
+  "SharedSize": 0,
+  "VirtualSize": 59768832,
+  "Labels": null,
+  "Containers": 0,
+  "ReadOnly": false,
+  "Dangling": false,
+  "Names": [
+   "docker.io/library/python:3.12-slim",
+   "localhost/py:dev"
+  ],
+  "Digest": "sha256:7777777777777777777777777777777777777777777777777777777777777777",
+  "History": [
+   "docker.io/library/python:3.12-slim",
+   "localhost/py:dev"
+  ],
+  "Created": 1757845355,
+  "CreatedAt": "2025-09-14T10:22:35Z"
+ },
+ {
+  "Id": "img-dangling",
+  "ParentId": "",
+  "RepoTags": null,
+  "RepoDigests": [],
+  "Size": 3145728,
+  "SharedSize": 0,
+  "VirtualSize": 3145728,
+  "Labels": null,
+  "Containers": 0,
+  "ReadOnly": false,
+  "Dangling": true,
+  "Names": null,
+  "Digest": "sha256:8888888888888888888888888888888888888888888888888888888888888888",
+  "History": [],
+  "Created": 1757845355,
+  "CreatedAt": "2025-09-14T10:22:35Z"
+ }
+]

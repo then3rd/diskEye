@@ -1,0 +1,28 @@
+[
+    {
+        "children": [
+            {
+                "name": "file",
+                "info": {
+                    "children": [
+                    ],
+                    "virtual-size": 1550024704,
+                    "filename": "/home/u/Downloads/archlinux-x86_64.iso",
+                    "format": "file",
+                    "actual-size": 1550028800,
+                    "format-specific": {
+                        "type": "file",
+                        "data": {
+                        }
+                    },
+                    "dirty-flag": false
+                }
+            }
+        ],
+        "virtual-size": 1550024704,
+        "filename": "/home/u/Downloads/archlinux-x86_64.iso",
+        "format": "raw",
+        "actual-size": 1550028800,
+        "dirty-flag": false
+    }
+]

@@ -1,0 +1,24 @@
+<domain type='kvm'>
+  <name>web2 &amp; friends</name>
+  <uuid>0f6c1c55-7a33-4c3e-9c47-2d1b2f0c9a02</uuid>
+  <memory unit='GiB'>2</memory>
+  <vcpu placement='static'>4</vcpu>
+  <devices>
+    <disk type='volume' device='disk'>
+      <driver name='qemu' type='qcow2'/>
+      <source pool='default' volume='web2.qcow2'/>
+      <target dev='vda' bus='virtio'/>
+    </disk>
+    <disk type='block' device='disk'>
+      <driver name='qemu' type='raw' cache='none' io='native'/>
+      <source dev='/dev/vg_system/lv_web2-data'/>
+      <target dev='vdb' bus='virtio'/>
+    </disk>
+    <disk type='file' device='cdrom'>
+      <driver name='qemu' type='raw'/>
+      <source file='/home/u/Downloads/debian-12.iso'/>
+      <target dev='sda' bus='sata'/>
+      <readonly/>
+    </disk>
+  </devices>
+</domain>

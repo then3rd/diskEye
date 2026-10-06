@@ -1,0 +1,1612 @@
+{
+ "BuildCache": [
+  {
+   "CreatedAt": "2026-10-05T20:42:33.731454378Z",
+   "Description": "pulled from docker.io/library/nginx:stable-alpine@sha256:0985e772fb9f729e6fa0980da05fca5d9c468e870eed43071545afa9d2e27d94",
+   "ID": "kyzf4wz6t0c7exspxepc13cz0",
+   "InUse": false,
+   "LastUsedAt": "2026-10-05T23:55:01.601552607Z",
+   "Shared": true,
+   "Size": 72290698,
+   "Type": "regular",
+   "UsageCount": 2
+  },
+  {
+   "CreatedAt": "2026-10-05T23:56:23.636013322Z",
+   "Description": "",
+   "ID": "m0pftlvycziwyep9misnzt95z",
+   "InUse": false,
+   "LastUsedAt": "2026-10-05T23:56:47.525009634Z",
+   "Shared": true,
+   "Size": 450,
+   "Type": "regular",
+   "UsageCount": 1
+  },
+  {
+   "CreatedAt": "2026-10-05T23:56:48.845380084Z",
+   "Description": "",
+   "ID": "jyzrtvdgsxte6rlxg5h7sbyzl",
+   "InUse": false,
+   "LastUsedAt": "2026-10-05T23:59:19.671092881Z",
+   "Shared": false,
+   "Size": 250,
+   "Type": "regular",
+   "UsageCount": 1
+  },
+  {
+   "CreatedAt": "2026-10-05T23:56:48.79633637Z",
+   "Description": "",
+   "ID": "11cbieb6soe4vu2xdbxw9k51d",
+   "InUse": false,
+   "LastUsedAt": "2026-10-05T23:56:48.816847381Z",
+   "Shared": false,
+   "Size": 211533439,
+   "Type": "regular",
+   "UsageCount": 1
+  },
+  {
+   "CreatedAt": "2026-10-05T23:59:27.613799631Z",
+   "Description": "[python-image-server-dummy 1/3] COPY backend/src/ /app/backend/src/",
+   "ID": "1qusr6tvg2v4mbei1t0zwcsdt",
+   "InUse": false,
+   "LastUsedAt": "2026-10-05T23:59:58.432962744Z",
+   "Shared": false,
+   "Size": 969702,
+   "Type": "regular",
+   "UsageCount": 1
+  },
+  {
+   "CreatedAt": "2026-10-05T23:58:49.782206514Z",
+   "Description": "[python-prod 6/7] COPY assets/examples/ /app/assets/examples/",
+   "ID": "77fd8do07em73rtos2t46lm00",
+   "InUse": false,
+   "LastUsedAt": "2026-10-05T23:59:19.657098161Z",
+   "Shared": false,
+   "Size": 265188389,
+   "Type": "regular",
+   "UsageCount": 1
+  },
+  {
+   "CreatedAt": "2026-10-05T23:56:23.620100018Z",
+   "Description": "",
+   "ID": "smwwvxdoduoldvokc6ds8dnef",
+   "InUse": false,
+   "LastUsedAt": "2026-10-05T23:56:23.642244991Z",
+   "Shared": true,
+   "Size": 63082034,
+   "Type": "regular",
+   "UsageCount": 1
+  },
+  {
+   "CreatedAt": "2026-10-05T23:59:27.564827588Z",
+   "Description": "[python-dev 2/2] COPY backend/entrypoint_dev.sh /app/entrypoint.sh",
+   "ID": "r6hj83mpdbi4vd0uzurzcye1t",
+   "InUse": false,
+   "LastUsedAt": "2026-10-05T23:59:58.431451002Z",
+   "Shared": false,
+   "Size": 12550,
+   "Type": "regular",
+   "UsageCount": 1
+  },
+  {
+   "CreatedAt": "2026-09-23T16:30:33.015098863Z",
+   "Description": "mount / from exec /bin/sh -c apk add --no-cache curl openssh-client bash git docker-cli ansible",
+   "ID": "hvleywc47iifbpg8cihbkvpc8",
+   "InUse": false,
+   "LastUsedAt": "2026-09-23T16:31:07.356744264Z",
+   "Shared": true,
+   "Size": 737530135,
+   "Type": "regular",
+   "UsageCount": 1
+  },
+  {
+   "CreatedAt": "2026-10-05T20:42:32.081991507Z",
+   "Description": "pulled from docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e",
+   "ID": "gjpqgv33n393or32krdcn0t0m",
+   "InUse": false,
+   "LastUsedAt": "2026-10-05T23:59:58.423311999Z",
+   "Shared": false,
+   "Size": 43113664,
+   "Type": "frontend",
+   "UsageCount": 59
+  },
+  {
+   "CreatedAt": "2026-10-05T23:56:23.760146694Z",
+   "Description": "cached mount /root/.npm from exec /bin/sh -c npm install with id \"//root/.npm\"",
+   "ID": "z90kgr3mnrx8gw1pq3400boui",
+   "InUse": false,
+   "LastUsedAt": "2026-10-05T23:56:53.598194805Z",
+   "Shared": false,
+   "Size": 52146176,
+   "Type": "exec.cachemount",
+   "UsageCount": 2
+  },
+  {
+   "CreatedAt": "2026-10-05T23:56:48.828905655Z",
+   "Description": "",
+   "ID": "v1k1tbjmbgkrvm4ig5rvfyki8",
+   "InUse": false,
+   "LastUsedAt": "2026-10-05T23:56:48.849814259Z",
+   "Shared": false,
+   "Size": 29584699,
+   "Type": "regular",
+   "UsageCount": 1
+  },
+  {
+   "CreatedAt": "2026-10-05T23:56:23.678910948Z",
+   "Description": "[vite-base 2/4] WORKDIR /app",
+   "ID": "w2ahfkfcss383f74co03lu9vc",
+   "InUse": false,
+   "LastUsedAt": "2026-10-05T23:56:47.537902195Z",
+   "Shared": true,
+   "Size": 8285,
+   "Type": "regular",
+   "UsageCount": 1
+  },
+  {
+   "CreatedAt": "2026-09-27T20:13:18.423020158Z",
+   "Description": "[3/4] COPY requirements.yml /tmp/requirements.yml",
+   "ID": "civpmptzyox9fm4392sj3ao99",
+   "InUse": false,
+   "LastUsedAt": "2026-09-27T20:13:32.930983005Z",
+   "Shared": true,
+   "Size": 12569,
+   "Type": "regular",
+   "UsageCount": 1
+  },
+  {
+   "CreatedAt": "2026-10-05T23:56:23.595605647Z",
+   "Description": "",
+   "ID": "5n1157dkly3ogrbrgpue6tf5p",
+   "InUse": false,
+   "LastUsedAt": "2026-10-05T23:56:23.625907924Z",
+   "Shared": true,
+   "Size": 3848507,
+   "Type": "regular",
+   "UsageCount": 1
+  },
+  {
+   "CreatedAt": "2026-10-05T20:42:33.705485354Z",
+   "Description": "pulled from docker.io/library/nginx:stable-alpine@sha256:0985e772fb9f729e6fa0980da05fca5d9c468e870eed43071545afa9d2e27d94",
+   "ID": "oz1uxwkd5550kahn0mcecfxq6",
+   "InUse": false,
+   "LastUsedAt": "2026-10-05T20:42:33.722084069Z",
+   "Shared": true,
+   "Size": 13498,
+   "Type": "regular",
+   "UsageCount": 1
+  },
+  {
+   "CreatedAt": "2026-10-05T23:56:48.743775929Z",
+   "Description": "",
+   "ID": "26h5sao0sdszaipozger9mbah",
+   "InUse": false,
+   "LastUsedAt": "2026-10-05T23:56:48.763785936Z",
+   "Shared": false,
+   "Size": 48488823,
+   "Type": "regular",
+   "UsageCount": 1
+  },
+  {
+   "CreatedAt": "2026-10-05T23:58:49.567125583Z",
+   "Description": "[python-prod 5/7] COPY backend/src/ /app/backend/src/",
+   "ID": "qudtf1achquqatny5ztetl3gd",
+   "InUse": false,
+   "LastUsedAt": "2026-10-05T23:59:19.655410628Z",
+   "Shared": false,
+   "Size": 969702,
+   "Type": "regular",
+   "UsageCount": 1
+  },
+  {
+   "CreatedAt": "2026-09-27T20:13:14.689633351Z",
+   "Description": "pulled from docker.io/library/alpine:3.24@sha256:294b683cb724975bec92580e1e685676bd4b50bda910ddb8c51d4cabeaec77e6",
+   "ID": "udtucsshfll2i6ti2pudhcoa8",
+   "InUse": false,
+   "LastUsedAt": "2026-10-05T20:42:33.633822162Z",
+   "Shared": true,
+   "Size": 12930570,
+   "Type": "regular",
+   "UsageCount": 2
+  },
+  {
+   "CreatedAt": "2026-10-05T23:58:49.372480692Z",
+   "Description": "[python-prod 2/7] COPY backend/entrypoint_prod.sh /app/entrypoint.sh",
+   "ID": "y3ynexu4vuw27qrmpvfuhulox",
+   "InUse": false,
+   "LastUsedAt": "2026-10-05T23:59:19.652039542Z",
+   "Shared": false,
+   "Size": 12491,
+   "Type": "regular",
+   "UsageCount": 1
+  },
+  {
+   "CreatedAt": "2026-10-05T23:59:27.866561885Z",
+   "Description": "[python-image-server-dummy 3/3] COPY --chown=1000:1000     backend/settings.toml     /app/backend/",
+   "ID": "9orcfrk8016t56nzw99qzkc15",
+   "InUse": false,
+   "LastUsedAt": "2026-10-05T23:59:58.440342442Z",
+   "Shared": false,
+   "Size": 17523,
+   "Type": "regular",
+   "UsageCount": 1
+  },
+  {
+   "CreatedAt": "2026-10-05T23:56:49.495076557Z",
+   "Description": "[python-base 3/5] WORKDIR /app/backend",
+   "ID": "sqr1983pzuqyt83ce0zkxyja7",
+   "InUse": false,
+   "LastUsedAt": "2026-10-05T23:59:19.676443433Z",
+   "Shared": false,
+   "Size": 4128,
+   "Type": "regular",
+   "UsageCount": 1
+  },
+  {
+   "CreatedAt": "2026-10-05T23:57:07.114087232Z",
+   "Description": "[python-base 5/5] COPY --chown=1000:1000 backend/pyproject.toml backend/poetry.lock /app/",
+   "ID": "kvtt6ooj50me3jlo5i7l6pdl1",
+   "InUse": false,
+   "LastUsedAt": "2026-10-05T23:59:58.437379719Z",
+   "Shared": false,
+   "Size": 296649,
+   "Type": "regular",
+   "UsageCount": 2
+  },
+  {
+   "CreatedAt": "2026-09-23T16:30:34.373097591Z",
+   "Description": "mount / from exec /bin/sh -c SUFFIX=$(uname -m | sed 's/x86_64//;s/aarch64/-arm64/') &&     curl -sSLo /usr/local/bin/k3sup         \"https://github.com/alexellis/k3sup/releases/download/${K3SUP_VERSION}/k3sup${SUFFIX}\" &&     chmod +x /usr/local/bin/k3sup",
+   "ID": "v5apak17nomods25xg8s7jqy1",
+   "InUse": false,
+   "LastUsedAt": "2026-09-23T16:31:07.358144593Z",
+   "Shared": true,
+   "Size": 12207432,
+   "Type": "regular",
+   "UsageCount": 1
+  },
+  {
+   "CreatedAt": "2026-09-23T16:30:35.879341845Z",
+   "Description": "mount / from exec /bin/sh -c ARCH=$(uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64/') &&     curl -sSLo /usr/local/bin/kubectl         \"https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/${ARCH}/kubectl\" &&     chmod +x /usr/local/bin/kubectl",
+   "ID": "6dx1q4t0c10a05gynex13bvas",
+   "InUse": false,
+   "LastUsedAt": "2026-09-23T16:31:07.359621571Z",
+   "Shared": true,
+   "Size": 77614607,
+   "Type": "regular",
+   "UsageCount": 1
+  },
+  {
+   "CreatedAt": "2026-10-05T20:42:33.694390044Z",
+   "Description": "pulled from docker.io/library/nginx:stable-alpine@sha256:0985e772fb9f729e6fa0980da05fca5d9c468e870eed43071545afa9d2e27d94",
+   "ID": "q876a3i512hke8ez6ifan1i37",
+   "InUse": false,
+   "LastUsedAt": "2026-10-05T20:42:33.710539356Z",
+   "Shared": true,
+   "Size": 12691,
+   "Type": "regular",
+   "UsageCount": 1
+  },
+  {
+   "CreatedAt": "2026-10-05T23:56:22.568476879Z",
+   "Description": "local source for context",
+   "ID": "ruw3kcdbochs8n4pasgm0vyra",
+   "InUse": false,
+   "LastUsedAt": "2026-10-05T23:59:58.427091239Z",
+   "Shared": false,
+   "Size": 8192,
+   "Type": "source.local",
+   "UsageCount": 4
+  },
+  {
+   "CreatedAt": "2026-10-05T23:57:07.146786068Z",
+   "Description": "cached mount /app/backend/.cache/pypoetry from exec /bin/sh -c $VENV_PATH/bin/poetry install --no-interaction --with opencv,backend with id \"//app/backend/.cache/pypoetry\"",
+   "ID": "3ag6zq8ut43w2dwrhjypv4f4m",
+   "InUse": false,
+   "LastUsedAt": "2026-10-06T00:00:20.89876476Z",
+   "Shared": false,
+   "Size": 348266496,
+   "Type": "exec.cachemount",
+   "UsageCount": 3
+  },
+  {
+   "CreatedAt": "2026-10-05T23:58:49.300158917Z",
+   "Description": "mount / from exec /bin/sh -c $VENV_PATH/bin/poetry install --no-interaction --with opencv,backend",
+   "ID": "7pa4rnyht9vtm75lanxwmcvuh",
+   "InUse": false,
+   "LastUsedAt": "2026-10-05T23:59:19.650670441Z",
+   "Shared": false,
+   "Size": 639664000,
+   "Type": "regular",
+   "UsageCount": 1
+  },
+  {
+   "CreatedAt": "2026-10-05T20:42:33.661712968Z",
+   "Description": "pulled from docker.io/library/nginx:stable-alpine@sha256:0985e772fb9f729e6fa0980da05fca5d9c468e870eed43071545afa9d2e27d94",
+   "ID": "ymsh71kt5s0vuoj7skhuedd7m",
+   "InUse": false,
+   "LastUsedAt": "2026-10-05T20:42:33.686387093Z",
+   "Shared": true,
+   "Size": 8818,
+   "Type": "regular",
+   "UsageCount": 1
+  },
+  {
+   "CreatedAt": "2026-10-05T20:42:33.717762312Z",
+   "Description": "pulled from docker.io/library/nginx:stable-alpine@sha256:0985e772fb9f729e6fa0980da05fca5d9c468e870eed43071545afa9d2e27d94",
+   "ID": "xqkq1z8d4v32yxsazjv6by6wg",
+   "InUse": false,
+   "LastUsedAt": "2026-10-05T20:42:33.735744035Z",
+   "Shared": true,
+   "Size": 17780,
+   "Type": "regular",
+   "UsageCount": 1
+  },
+  {
+   "CreatedAt": "2026-10-05T23:56:48.783175617Z",
+   "Description": "[internal] setting cache mount permissions",
+   "ID": "my3a4h00oajpfbs1uscu7t02t",
+   "InUse": false,
+   "LastUsedAt": "2026-10-05T23:59:58.443485547Z",
+   "Shared": false,
+   "Size": 8192,
+   "Type": "regular",
+   "UsageCount": 2
+  },
+  {
+   "CreatedAt": "2026-10-05T23:58:49.513797876Z",
+   "Description": "[python-prod 4/7] COPY assets/icons/ /app/assets/icons/",
+   "ID": "6tmq4c5ors7ins0ogek890x71",
+   "InUse": false,
+   "LastUsedAt": "2026-10-05T23:59:19.675149023Z",
+   "Shared": false,
+   "Size": 14106633,
+   "Type": "regular",
+   "UsageCount": 1
+  },
+  {
+   "CreatedAt": "2026-10-05T23:56:21.344769953Z",
+   "Description": "local source for dockerfile",
+   "ID": "870m0odnlazzqlsm6355684xt",
+   "InUse": false,
+   "LastUsedAt": "2026-10-05T23:59:58.435939957Z",
+   "Shared": false,
+   "Size": 12288,
+   "Type": "source.local",
+   "UsageCount": 4
+  },
+  {
+   "CreatedAt": "2026-10-05T23:57:07.020819913Z",
+   "Description": "mount / from exec /bin/sh -c python3 -m venv $VENV_PATH     && $VENV_PATH/bin/pip install --upgrade pip poetry",
+   "ID": "l16vpwpq49pr7zbef3wdyqk2u",
+   "InUse": false,
+   "LastUsedAt": "2026-10-05T23:59:19.658860985Z",
+   "Shared": false,
+   "Size": 123903971,
+   "Type": "regular",
+   "UsageCount": 1
+  },
+  {
+   "CreatedAt": "2026-10-05T23:59:27.8338501Z",
+   "Description": "[python-image-server-dummy 2/3] COPY assets/examples/ /app/assets/examples/",
+   "ID": "8qhg3znbqv1z7zfz23v777pol",
+   "InUse": false,
+   "LastUsedAt": "2026-10-05T23:59:58.4451776Z",
+   "Shared": false,
+   "Size": 265188413,
+   "Type": "regular",
+   "UsageCount": 1
+  },
+  {
+   "CreatedAt": "2026-10-05T23:56:48.758069101Z",
+   "Description": "",
+   "ID": "km6bg47q6rl4w6fud3cn8yfdy",
+   "InUse": false,
+   "LastUsedAt": "2026-10-05T23:56:48.786181441Z",
+   "Shared": false,
+   "Size": 24038269,
+   "Type": "regular",
+   "UsageCount": 1
+  },
+  {
+   "CreatedAt": "2026-09-27T20:13:26.194713646Z",
+   "Description": "mount / from exec /bin/sh -c ansible-galaxy collection install -r /tmp/requirements.yml",
+   "ID": "vspixq0pjok9ioyy6p5wunnp5",
+   "InUse": false,
+   "LastUsedAt": "2026-09-27T20:13:32.932513846Z",
+   "Shared": true,
+   "Size": 8267663,
+   "Type": "regular",
+   "UsageCount": 1
+  },
+  {
+   "CreatedAt": "2026-10-05T23:58:49.815534084Z",
+   "Description": "[python-prod 7/7] COPY --chown=1000:1000     backend/settings.toml     /app/backend/",
+   "ID": "g9ac8wwlt8kbbz5lebo2id3df",
+   "InUse": false,
+   "LastUsedAt": "2026-10-05T23:59:19.664808362Z",
+   "Shared": false,
+   "Size": 17520,
+   "Type": "regular",
+   "UsageCount": 1
+  },
+  {
+   "CreatedAt": "2026-10-05T23:56:48.811855322Z",
+   "Description": "",
+   "ID": "u3al3azn608zqj6j2bwedknck",
+   "InUse": false,
+   "LastUsedAt": "2026-10-05T23:56:48.833691893Z",
+   "Shared": false,
+   "Size": 6162149,
+   "Type": "regular",
+   "UsageCount": 1
+  },
+  {
+   "CreatedAt": "2026-10-05T20:42:33.629372594Z",
+   "Description": "pulled from docker.io/library/nginx:stable-alpine@sha256:0985e772fb9f729e6fa0980da05fca5d9c468e870eed43071545afa9d2e27d94",
+   "ID": "pvymk0tixla3lk296vf7xq53m",
+   "InUse": false,
+   "LastUsedAt": "2026-10-05T20:42:33.667881876Z",
+   "Shared": true,
+   "Size": 7514152,
+   "Type": "regular",
+   "UsageCount": 1
+  },
+  {
+   "CreatedAt": "2026-10-05T23:54:53.412338452Z",
+   "Description": "[nginx-prod 2/4] COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf",
+   "ID": "p0d4rwjx3ctexxiiodg0mcras",
+   "InUse": false,
+   "LastUsedAt": "2026-10-05T23:55:01.602947667Z",
+   "Shared": true,
+   "Size": 21369,
+   "Type": "regular",
+   "UsageCount": 1
+  },
+  {
+   "CreatedAt": "2026-10-05T20:42:33.680917899Z",
+   "Description": "pulled from docker.io/library/nginx:stable-alpine@sha256:0985e772fb9f729e6fa0980da05fca5d9c468e870eed43071545afa9d2e27d94",
+   "ID": "bvhfiur6dhlwx79sr4mijja4k",
+   "InUse": false,
+   "LastUsedAt": "2026-10-05T20:42:33.698796032Z",
+   "Shared": true,
+   "Size": 13251,
+   "Type": "regular",
+   "UsageCount": 1
+  },
+  {
+   "CreatedAt": "2026-09-27T20:13:18.367439701Z",
+   "Description": "mount / from exec /bin/sh -c apk add --no-cache ansible-core git openssh-client sshpass     && git config --system --add safe.directory '*'",
+   "ID": "hb5mryp9603o8qy07zcqkwuke",
+   "InUse": false,
+   "LastUsedAt": "2026-09-27T20:13:32.943426222Z",
+   "Shared": true,
+   "Size": 132103378,
+   "Type": "regular",
+   "UsageCount": 1
+  },
+  {
+   "CreatedAt": "2026-09-23T16:30:23.206209224Z",
+   "Description": "pulled from docker.io/library/alpine:3.22@sha256:5291449c3df73caf6ed85e649dec1b9e818b39a5d8c871e97afc13e9cd5e8fa8",
+   "ID": "pgyis8n8hvpftgo88l5vuqh22",
+   "InUse": false,
+   "LastUsedAt": "2026-09-23T16:31:07.355059355Z",
+   "Shared": true,
+   "Size": 12758219,
+   "Type": "regular",
+   "UsageCount": 1
+  },
+  {
+   "CreatedAt": "2026-10-05T23:56:23.727911842Z",
+   "Description": "[vite-base 3/4] COPY frontend/package*.json /app/",
+   "ID": "1s435kmda2179276anwd8b1ee",
+   "InUse": false,
+   "LastUsedAt": "2026-10-05T23:56:47.539342706Z",
+   "Shared": true,
+   "Size": 267885,
+   "Type": "regular",
+   "UsageCount": 1
+  },
+  {
+   "CreatedAt": "2026-10-05T23:56:22.669621821Z",
+   "Description": "local source for context",
+   "ID": "xenbk0zci51tw4mgu0bf84swx",
+   "InUse": false,
+   "LastUsedAt": "2026-10-05T23:59:58.42983833Z",
+   "Shared": false,
+   "Size": 134148096,
+   "Type": "source.local",
+   "UsageCount": 4
+  },
+  {
+   "CreatedAt": "2026-10-05T23:56:48.778802003Z",
+   "Description": "",
+   "ID": "xhlsva1b4gf4h7vip961skcch",
+   "InUse": false,
+   "LastUsedAt": "2026-10-05T23:56:48.80138704Z",
+   "Shared": false,
+   "Size": 64396012,
+   "Type": "regular",
+   "UsageCount": 1
+  },
+  {
+   "CreatedAt": "2026-10-05T23:55:01.219843154Z",
+   "Description": "[nginx-prod 4/4] COPY --from=vite-build /app/dist /usr/share/nginx/html",
+   "ID": "mtsfpgz2laykntj04r31tz7ws",
+   "InUse": false,
+   "LastUsedAt": "2026-10-05T23:56:22.904478208Z",
+   "Shared": true,
+   "Size": 1061142,
+   "Type": "regular",
+   "UsageCount": 2
+  },
+  {
+   "CreatedAt": "2026-10-05T23:59:27.436161553Z",
+   "Description": "mount / from exec /bin/sh -c $VENV_PATH/bin/poetry install --no-interaction --with opencv,backend,dev",
+   "ID": "r7s2dyde31m45c3lbtqp79lxx",
+   "InUse": false,
+   "LastUsedAt": "2026-10-05T23:59:58.438929871Z",
+   "Shared": false,
+   "Size": 686542983,
+   "Type": "regular",
+   "UsageCount": 1
+  },
+  {
+   "CreatedAt": "2026-09-23T16:30:36.760186761Z",
+   "Description": "mount / from exec /bin/sh -c ARCH=$(uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64/') &&     curl -sSLo /usr/local/bin/kind         \"https://kind.sigs.k8s.io/dl/${KIND_VERSION}/kind-linux-${ARCH}\" &&     chmod +x /usr/local/bin/kind",
+   "ID": "ijqioe2acuawbuk8imvrflywx",
+   "InUse": false,
+   "LastUsedAt": "2026-10-05T20:41:20.987374019Z",
+   "Shared": true,
+   "Size": 14880989,
+   "Type": "regular",
+   "UsageCount": 2
+  },
+  {
+   "CreatedAt": "2026-10-05T23:54:53.460242549Z",
+   "Description": "[redacted]",
+   "ID": "5v68bdvt8cmweepn2j4pjrfbf",
+   "InUse": false,
+   "LastUsedAt": "2026-10-05T23:55:01.606704526Z",
+   "Shared": true,
+   "Size": 20804,
+   "Type": "regular",
+   "UsageCount": 1
+  },
+  {
+   "CreatedAt": "2026-10-05T23:56:49.461844147Z",
+   "Description": "mount / from exec /bin/sh -c mkdir -p /var/cache/shop /app/backend/.cache/pip /app/backend/.cache/pypoetry     && chown -R 1000:1000 /var/cache/shop /app/backend",
+   "ID": "pgb0272tbm8edc0tu2hyi1ipd",
+   "InUse": false,
+   "LastUsedAt": "2026-10-05T23:59:19.673810112Z",
+   "Shared": false,
+   "Size": 41191,
+   "Type": "regular",
+   "UsageCount": 1
+  },
+  {
+   "CreatedAt": "2026-10-05T23:58:49.438343166Z",
+   "Description": "[python-prod 3/7] COPY assets/fonts/ /app/assets/fonts/",
+   "ID": "sb3tyi9ytq0dzqvrwib7yocb2",
+   "InUse": false,
+   "LastUsedAt": "2026-10-05T23:59:19.663399871Z",
+   "Shared": false,
+   "Size": 47021902,
+   "Type": "regular",
+   "UsageCount": 1
+  },
+  {
+   "CreatedAt": "2026-10-05T23:56:32.966544561Z",
+   "Description": "mount / from exec /bin/sh -c npm install",
+   "ID": "ykgbuxlfcp8n49ewft42ednre",
+   "InUse": false,
+   "LastUsedAt": "2026-10-05T23:56:47.528489121Z",
+   "Shared": true,
+   "Size": 314691243,
+   "Type": "regular",
+   "UsageCount": 1
+  },
+  {
+   "CreatedAt": "2026-10-05T23:56:49.539055591Z",
+   "Description": "cached mount /app/backend/.cache/pip from exec /bin/sh -c python3 -m venv $VENV_PATH     && $VENV_PATH/bin/pip install --upgrade pip poetry with id \"//app/backend/.cache/pip\"",
+   "ID": "ko0wk8ks3yts16pz7ys1aqsxl",
+   "InUse": false,
+   "LastUsedAt": "2026-10-05T23:59:20.718374393Z",
+   "Shared": false,
+   "Size": 27824128,
+   "Type": "exec.cachemount",
+   "UsageCount": 2
+  }
+ ],
+ "Containers": [
+  {
+   "Created": 1791235976,
+   "Id": "3c3e41a36ff78a6c6decfc4da17637c283cfe70d52cdd9a27068b65735ca493d",
+   "Image": "kindest/node:v1.36.1@sha256:3489c7674813ba5d8b1a9977baea8a6e553784dab7b84759d1014dbd78f7ebd5",
+   "ImageID": "sha256:3489c7674813ba5d8b1a9977baea8a6e553784dab7b84759d1014dbd78f7ebd5",
+   "Mounts": [
+    {
+     "Destination": "/app-src",
+     "RW": true,
+     "Source": "/home/u/src/shop/app",
+     "Type": "bind"
+    },
+    {
+     "Destination": "/lib/modules",
+     "RW": false,
+     "Source": "/lib/modules",
+     "Type": "bind"
+    },
+    {
+     "Destination": "/var",
+     "Name": "83e57b6ae5503e631f927dd38ff58b066832adda12e5d1dda628c46964a22d3e",
+     "RW": true,
+     "Source": "",
+     "Type": "volume"
+    },
+    {
+     "Destination": "/var/cache/shop",
+     "RW": true,
+     "Source": "/var/cache/shop",
+     "Type": "bind"
+    }
+   ],
+   "Names": [
+    "/shop-dev-control-plane"
+   ],
+   "SizeRootFs": 935309312,
+   "SizeRw": 3850240,
+   "State": "running",
+   "Status": "Up 4 hours"
+  },
+  {
+   "Created": 1790976239,
+   "Id": "3a0a6f0e41082ed6dfa9cfdfa1130323b5086243c130743a31c81fd9751d4f9b",
+   "Image": "ghcr.io/example/ml-worker:release",
+   "ImageID": "sha256:e16c2f166a8174901959fdf85e2e4c7bd1ebc4b37e0b6655de97c41408a260c4",
+   "Mounts": [
+    {
+     "Destination": "/cache",
+     "RW": true,
+     "Source": "/srv/docker/ml-worker/model-cache",
+     "Type": "bind"
+    }
+   ],
+   "Names": [
+    "/ml-worker"
+   ],
+   "SizeRootFs": 1043910656,
+   "SizeRw": 12288,
+   "State": "running",
+   "Status": "Up 3 days (healthy)"
+  },
+  {
+   "Created": 1790887195,
+   "Id": "1e0ba8cc1873b32dfa055a7f47ca2b9529f1f4085862ed905bb81e052a505791",
+   "Image": "nikolaik/python-nodejs:python3.11-nodejs20",
+   "ImageID": "sha256:8f958bdc1b4a422bfafd97cab4f69836401f616ae985d4b57a53d254f5bcb038",
+   "Mounts": [
+    {
+     "Destination": "/root/.agent/cache/audio",
+     "RW": false,
+     "Source": "/srv/docker/agent/data/cache/audio",
+     "Type": "bind"
+    },
+    {
+     "Destination": "/root/.agent/cache/delegation",
+     "RW": false,
+     "Source": "/srv/docker/agent/data/cache/delegation",
+     "Type": "bind"
+    },
+    {
+     "Destination": "/root/.agent/cache/images",
+     "RW": false,
+     "Source": "/srv/docker/agent/data/cache/images",
+     "Type": "bind"
+    },
+    {
+     "Destination": "/root/.agent/cache/screenshots",
+     "RW": false,
+     "Source": "/srv/docker/agent/data/cache/screenshots",
+     "Type": "bind"
+    },
+    {
+     "Destination": "/root/.agent/cache/web",
+     "RW": false,
+     "Source": "/srv/docker/agent/data/cache/web",
+     "Type": "bind"
+    },
+    {
+     "Destination": "/workspace",
+     "RW": true,
+     "Source": "/srv/docker/agent/data/sandboxes/docker/prompt-backend-probe/workspace",
+     "Type": "bind"
+    },
+    {
+     "Destination": "/root",
+     "RW": true,
+     "Source": "/srv/docker/agent/data/sandboxes/docker/prompt-backend-probe/home",
+     "Type": "bind"
+    },
+    {
+     "Destination": "/root/.agent/attachments",
+     "RW": false,
+     "Source": "/srv/docker/agent/data/attachments",
+     "Type": "bind"
+    },
+    {
+     "Destination": "/root/.agent/cache/documents",
+     "RW": false,
+     "Source": "/srv/docker/agent/data/cache/documents",
+     "Type": "bind"
+    },
+    {
+     "Destination": "/root/.agent/cache/videos",
+     "RW": false,
+     "Source": "/srv/docker/agent/data/cache/videos",
+     "Type": "bind"
+    },
+    {
+     "Destination": "/root/.agent/images",
+     "RW": false,
+     "Source": "/srv/docker/agent/data/images",
+     "Type": "bind"
+    },
+    {
+     "Destination": "/root/.agent/skills",
+     "RW": false,
+     "Source": "/srv/docker/agent/data/skills",
+     "Type": "bind"
+    },
+    {
+     "Destination": "/opt/data/notesync",
+     "RW": true,
+     "Source": "/home/u/notes",
+     "Type": "bind"
+    }
+   ],
+   "Names": [
+    "/agent-97130776"
+   ],
+   "SizeRootFs": 1653178368,
+   "SizeRw": 28672,
+   "State": "running",
+   "Status": "Up 4 days"
+  },
+  {
+   "Created": 1787707638,
+   "Id": "98d65b2b70c70345d1037983bff305a12eb8008417653dfe235a4ac1e8f62d25",
+   "Image": "weather-site",
+   "ImageID": "sha256:c7e5beac0706e246239ac2f7168aead989f74399fe77e94ec19667d50a07df91",
+   "Mounts": [
+    {
+     "Destination": "/app/public",
+     "RW": true,
+     "Source": "/home/u/src/weather/_site/public",
+     "Type": "bind"
+    },
+    {
+     "Destination": "/app/src",
+     "RW": true,
+     "Source": "/home/u/src/weather/_site/src",
+     "Type": "bind"
+    }
+   ],
+   "Names": [
+    "/site"
+   ],
+   "SizeRootFs": 1552515072,
+   "SizeRw": 16232448,
+   "State": "running",
+   "Status": "Up 10 days"
+  },
+  {
+   "Created": 1787707632,
+   "Id": "e221d18a979e5d6f91fa3cae435d96967cbe367223ed0a26b2b72d460afb1854",
+   "Image": "weather-viewer-api",
+   "ImageID": "sha256:ce8f43d56a308dbed82fa1679f58e94e46f363cf20358943d9b5068408643ba0",
+   "Mounts": [
+    {
+     "Destination": "/app/output",
+     "RW": false,
+     "Source": "/home/u/src/weather/_indexer/output",
+     "Type": "bind"
+    },
+    {
+     "Destination": "/app/schema",
+     "RW": true,
+     "Source": "/home/u/src/weather/_indexer/schema",
+     "Type": "bind"
+    },
+    {
+     "Destination": "/app/src",
+     "RW": true,
+     "Source": "/home/u/src/weather/_indexer/src",
+     "Type": "bind"
+    }
+   ],
+   "Names": [
+    "/viewer-api"
+   ],
+   "SizeRootFs": 2303512576,
+   "SizeRw": 131072,
+   "State": "running",
+   "Status": "Up 10 days"
+  },
+  {
+   "Created": 1787707632,
+   "Id": "7a9236bbfcce37b637e18c48710437e3b9dede67b25f70e430d631964c06e8d9",
+   "Image": "weather-indexer-forecast",
+   "ImageID": "sha256:f066d41a232749d2b2446adb0983e7b51cae94c956f6bf5ba0d321c9397a3881",
+   "Mounts": [
+    {
+     "Destination": "/app/schema",
+     "RW": true,
+     "Source": "/home/u/src/weather/_indexer/schema",
+     "Type": "bind"
+    },
+    {
+     "Destination": "/app/src",
+     "RW": true,
+     "Source": "/home/u/src/weather/_indexer/src",
+     "Type": "bind"
+    },
+    {
+     "Destination": "/run/secrets/api_token",
+     "RW": false,
+     "Source": "/home/u/src/weather/_indexer/secrets/api_token",
+     "Type": "bind"
+    }
+   ],
+   "Names": [
+    "/indexer-forecast"
+   ],
+   "SizeRootFs": 2303713280,
+   "SizeRw": 331776,
+   "State": "running",
+   "Status": "Up 10 days"
+  },
+  {
+   "Created": 1787707632,
+   "Id": "6bc74801ff15c3649537a69796dcd8bbfad27d72e5d82f11f2fdc53845e58fe2",
+   "Image": "weather-indexer-poll",
+   "ImageID": "sha256:66841a0ec2e969a86ae81876049ae75f355ba26798f53e00f7d5ed8c246c2135",
+   "Mounts": [
+    {
+     "Destination": "/app/schema",
+     "RW": true,
+     "Source": "/home/u/src/weather/_indexer/schema",
+     "Type": "bind"
+    },
+    {
+     "Destination": "/app/src",
+     "RW": true,
+     "Source": "/home/u/src/weather/_indexer/src",
+     "Type": "bind"
+    },
+    {
+     "Destination": "/run/secrets/api_token",
+     "RW": false,
+     "Source": "/home/u/src/weather/_indexer/secrets/api_token",
+     "Type": "bind"
+    }
+   ],
+   "Names": [
+    "/indexer-poll"
+   ],
+   "SizeRootFs": 2303676416,
+   "SizeRw": 294912,
+   "State": "running",
+   "Status": "Up 10 days"
+  },
+  {
+   "Created": 1786508603,
+   "Id": "8bd9908cd50d1f743439c335f1d4fc06a8b126bd7a89267164cf082ae36e5e66",
+   "Image": "example/agent:latest",
+   "ImageID": "sha256:a2d03767b0f9a619baeac47b278f1f5d9edbd7d2dff55eecbe3f99362988b971",
+   "Mounts": [
+    {
+     "Destination": "/srv/docker/agent/data",
+     "RW": true,
+     "Source": "/srv/docker/agent/data",
+     "Type": "bind"
+    },
+    {
+     "Destination": "/var/run/docker.sock",
+     "RW": true,
+     "Source": "/run/user/1000/docker.sock",
+     "Type": "bind"
+    },
+    {
+     "Destination": "/opt/data",
+     "RW": true,
+     "Source": "/srv/docker/agent/data",
+     "Type": "bind"
+    },
+    {
+     "Destination": "/opt/data/notesync",
+     "RW": true,
+     "Source": "/home/u/notes",
+     "Type": "bind"
+    }
+   ],
+   "Names": [
+    "/agent-gateway"
+   ],
+   "SizeRootFs": 2997477376,
+   "SizeRw": 778240,
+   "State": "running",
+   "Status": "Up 10 days"
+  },
+  {
+   "Created": 1786487819,
+   "Id": "e7585654991cc13a2a4e6a68c4a98161e45d4024f3b3c0cc45d14a98c1806bda",
+   "Image": "ghcr.io/open-webui/open-webui:main",
+   "ImageID": "sha256:6a773e5c3a246b65cbe74ce942b294292c0e5f81c138f703d111bc162f7d7c3d",
+   "Mounts": [
+    {
+     "Destination": "/app/backend/data",
+     "RW": true,
+     "Source": "/srv/docker/ollama/open-webui",
+     "Type": "bind"
+    }
+   ],
+   "Names": [
+    "/open-webui"
+   ],
+   "SizeRootFs": 5385916416,
+   "SizeRw": 59346944,
+   "State": "running",
+   "Status": "Up 10 days (healthy)"
+  },
+  {
+   "Created": 1786320931,
+   "Id": "976db59a3308ea88afa01724661f979e845c64c355b466512e1b4f348860f27e",
+   "Image": "tracker-api",
+   "ImageID": "sha256:2596d631b7b51b70cac18329d35cc936fd09b331242ed0898e96908dde55511d",
+   "Mounts": [],
+   "Names": [
+    "/tracker-api-1"
+   ],
+   "SizeRootFs": 259428352,
+   "SizeRw": 1404928,
+   "State": "running",
+   "Status": "Up 38 seconds"
+  },
+  {
+   "Created": 1786320931,
+   "Id": "16d8bffaa87227abc8f1466bdbf3f579b30cafd6805323b98ad7f54526c89944",
+   "Image": "tracker-poller",
+   "ImageID": "sha256:570aad9afcfa508f6655380c4ba82ee89bf8655009b298a4b3bb304baa869eaf",
+   "Mounts": [],
+   "Names": [
+    "/tracker-poller-1"
+   ],
+   "SizeRootFs": 259055616,
+   "SizeRw": 1032192,
+   "State": "running",
+   "Status": "Up 10 days"
+  },
+  {
+   "Created": 1786320417,
+   "Id": "04c702eca26c3ff817c45e6ee2ccc46b7b73a7266775206881c19e2737bddd21",
+   "Image": "grafana/grafana:latest",
+   "ImageID": "sha256:121a7a9ece6dc10b969f1f96eed64b4f07dfac0d0b8abc070f7cb83bbde86f63",
+   "Mounts": [
+    {
+     "Destination": "/var/lib/grafana/plugins/weather-barb-map-panel",
+     "RW": false,
+     "Source": "/home/u/src/weather/_grafana/plugins/weather-barb-map-panel/dist",
+     "Type": "bind"
+    },
+    {
+     "Destination": "/var/lib/grafana/plugins/weather-feather-panel",
+     "RW": false,
+     "Source": "/home/u/src/weather/_grafana/plugins/weather-feather-panel/dist",
+     "Type": "bind"
+    },
+    {
+     "Destination": "/etc/grafana/grafana.ini",
+     "RW": true,
+     "Source": "/home/u/src/weather/_grafana/config/grafana.ini",
+     "Type": "bind"
+    },
+    {
+     "Destination": "/etc/grafana/provisioning",
+     "RW": true,
+     "Source": "/home/u/src/weather/_grafana/provisioning",
+     "Type": "bind"
+    },
+    {
+     "Destination": "/var/lib/grafana",
+     "RW": true,
+     "Source": "/home/u/src/weather/_grafana/data",
+     "Type": "bind"
+    }
+   ],
+   "Names": [
+    "/grafana"
+   ],
+   "SizeRootFs": 1197744128,
+   "SizeRw": 8192,
+   "State": "running",
+   "Status": "Up 10 days (healthy)"
+  },
+  {
+   "Created": 1786320417,
+   "Id": "a455c9d7c3e783e322401c1496bb7a9c94afdf0f1079c0ab2c374ebe8de2b90f",
+   "Image": "mariadb",
+   "ImageID": "sha256:628f228f0fd5913a220438693576b29b6fe4dc1fa0a1298c0e98579fae28635f",
+   "Mounts": [
+    {
+     "Destination": "/docker-entrypoint-initdb.d",
+     "RW": true,
+     "Source": "/home/u/src/weather/_mariadb/schema",
+     "Type": "bind"
+    },
+    {
+     "Destination": "/run/secrets/user_pass",
+     "RW": true,
+     "Source": "/home/u/src/weather/_mariadb/secrets/user_pass",
+     "Type": "bind"
+    },
+    {
+     "Destination": "/var/lib/mysql",
+     "RW": true,
+     "Source": "/home/u/src/weather/_mariadb/data",
+     "Type": "bind"
+    }
+   ],
+   "Names": [
+    "/mariadb"
+   ],
+   "SizeRootFs": 363995136,
+   "SizeRw": 24576,
+   "State": "running",
+   "Status": "Up 10 days (healthy)"
+  },
+  {
+   "Created": 1781399737,
+   "Id": "04fe5a716f936246f36734023044aaf8c2d479fb4f66339965b63650361a0687",
+   "Image": "sha256:047357ac0cfea04663786a612ba1eaba9702bef25227a794b52890dd8bcd692e",
+   "ImageID": "sha256:047357ac0cfea04663786a612ba1eaba9702bef25227a794b52890dd8bcd692e",
+   "Mounts": [
+    {
+     "Destination": "/app-src",
+     "RW": true,
+     "Source": "/home/u/src/shop/app",
+     "Type": "bind"
+    },
+    {
+     "Destination": "/lib/modules",
+     "RW": false,
+     "Source": "/lib/modules",
+     "Type": "bind"
+    },
+    {
+     "Destination": "/var",
+     "Name": "40469d698520406894f5f61fadd88b4dab7e1782922c40b1ee23a4d49e92d834",
+     "RW": true,
+     "Source": "",
+     "Type": "volume"
+    }
+   ],
+   "Names": [],
+   "State": "exited",
+   "Status": "Exited (137) 3 months ago"
+  }
+ ],
+ "Images": [
+  {
+   "Containers": 0,
+   "Created": 1791244767,
+   "Descriptor": {
+    "digest": "sha256:4babfb704bd599ef602b479ed57951f990d03f03d090286ba23a9eeb6157a93c",
+    "mediaType": "application/vnd.oci.image.index.v1+json",
+    "size": 856
+   },
+   "Id": "sha256:4babfb704bd599ef602b479ed57951f990d03f03d090286ba23a9eeb6157a93c",
+   "ParentId": "",
+   "RepoDigests": [
+    "shop/image-server@sha256:4babfb704bd599ef602b479ed57951f990d03f03d090286ba23a9eeb6157a93c"
+   ],
+   "RepoTags": [
+    "shop/image-server:dummy"
+   ],
+   "SharedSize": 1195110400,
+   "Size": 2561664597
+  },
+  {
+   "Containers": 0,
+   "Created": 1791244729,
+   "Descriptor": {
+    "digest": "sha256:14205b937aff89464e1a7211b03146c5ce06a5ee14f6a4079eb45bf059334e31",
+    "mediaType": "application/vnd.oci.image.index.v1+json",
+    "size": 856
+   },
+   "Id": "sha256:14205b937aff89464e1a7211b03146c5ce06a5ee14f6a4079eb45bf059334e31",
+   "ParentId": "",
+   "RepoDigests": [
+    "shop/backend@sha256:14205b937aff89464e1a7211b03146c5ce06a5ee14f6a4079eb45bf059334e31"
+   ],
+   "RepoTags": [
+    "shop/backend:latest"
+   ],
+   "SharedSize": 1195110400,
+   "Size": 2575915165
+  },
+  {
+   "Containers": 0,
+   "Created": 1791244592,
+   "Descriptor": {
+    "digest": "sha256:6f88dff46615825096d65e1eef928fc956468c05003153f10db407d51d36e4b6",
+    "mediaType": "application/vnd.oci.image.index.v1+json",
+    "size": 856
+   },
+   "Id": "sha256:6f88dff46615825096d65e1eef928fc956468c05003153f10db407d51d36e4b6",
+   "ParentId": "",
+   "RepoDigests": [
+    "shop/frontend@sha256:6f88dff46615825096d65e1eef928fc956468c05003153f10db407d51d36e4b6"
+   ],
+   "RepoTags": [
+    "shop/frontend:vite"
+   ],
+   "SharedSize": 9076736,
+   "Size": 572977601
+  },
+  {
+   "Containers": 0,
+   "Created": 1791244501,
+   "Descriptor": {
+    "digest": "sha256:7c7d57ad0f6d4f378aa23f0b831c7b584eb1fa274746b6eef770fa905bb085f4",
+    "mediaType": "application/vnd.oci.image.index.v1+json",
+    "size": 856
+   },
+   "Id": "sha256:7c7d57ad0f6d4f378aa23f0b831c7b584eb1fa274746b6eef770fa905bb085f4",
+   "ParentId": "",
+   "RepoDigests": [
+    "shop/frontend@sha256:7c7d57ad0f6d4f378aa23f0b831c7b584eb1fa274746b6eef770fa905bb085f4"
+   ],
+   "RepoTags": [
+    "shop/frontend:latest"
+   ],
+   "SharedSize": 9080832,
+   "Size": 93922430
+  },
+  {
+   "Containers": 1,
+   "Created": 1790614462,
+   "Descriptor": {
+    "digest": "sha256:e16c2f166a8174901959fdf85e2e4c7bd1ebc4b37e0b6655de97c41408a260c4",
+    "mediaType": "application/vnd.oci.image.index.v1+json",
+    "size": 2204
+   },
+   "Id": "sha256:e16c2f166a8174901959fdf85e2e4c7bd1ebc4b37e0b6655de97c41408a260c4",
+   "ParentId": "",
+   "RepoDigests": [
+    "ghcr.io/example/ml-worker@sha256:e16c2f166a8174901959fdf85e2e4c7bd1ebc4b37e0b6655de97c41408a260c4"
+   ],
+   "RepoTags": [
+    "ghcr.io/example/ml-worker:release"
+   ],
+   "SharedSize": 0,
+   "Size": 1385937163
+  },
+  {
+   "Containers": 0,
+   "Created": 1790540006,
+   "Descriptor": {
+    "digest": "sha256:f2822bfb25e62d9fdf1a42e6c998d462d878780a3723b9fda6bab827457c41b6",
+    "mediaType": "application/vnd.oci.image.index.v1+json",
+    "size": 856
+   },
+   "Id": "sha256:f2822bfb25e62d9fdf1a42e6c998d462d878780a3723b9fda6bab827457c41b6",
+   "ParentId": "",
+   "RepoDigests": [
+    "weather/ansible@sha256:f2822bfb25e62d9fdf1a42e6c998d462d878780a3723b9fda6bab827457c41b6"
+   ],
+   "RepoTags": [
+    "weather/ansible:latest"
+   ],
+   "SharedSize": 9080832,
+   "Size": 153224366
+  },
+  {
+   "Containers": 0,
+   "Created": 1790181036,
+   "Descriptor": {
+    "digest": "sha256:4c95c8224b5b8fef4b9d5b789ede4a8c89e6ed39ff09bf9d0b58c7d3c07bb97d",
+    "mediaType": "application/vnd.oci.image.index.v1+json",
+    "size": 856
+   },
+   "Id": "sha256:4c95c8224b5b8fef4b9d5b789ede4a8c89e6ed39ff09bf9d0b58c7d3c07bb97d",
+   "ParentId": "",
+   "RepoDigests": [
+    "shop/k3s-tools@sha256:4c95c8224b5b8fef4b9d5b789ede4a8c89e6ed39ff09bf9d0b58c7d3c07bb97d"
+   ],
+   "RepoTags": [
+    "shop/k3s-tools:latest"
+   ],
+   "SharedSize": 0,
+   "Size": 853904103
+  },
+  {
+   "Containers": 0,
+   "Created": 1789682294,
+   "Descriptor": {
+    "digest": "sha256:6aeddd44c3078b0f9a35206472a11420648a79c184603ef95957d0a20044cb2b",
+    "mediaType": "application/vnd.oci.image.index.v1+json",
+    "size": 8987
+   },
+   "Id": "sha256:6aeddd44c3078b0f9a35206472a11420648a79c184603ef95957d0a20044cb2b",
+   "ParentId": "",
+   "RepoDigests": [
+    "caddy@sha256:6aeddd44c3078b0f9a35206472a11420648a79c184603ef95957d0a20044cb2b"
+   ],
+   "RepoTags": [
+    "caddy:2-alpine"
+   ],
+   "SharedSize": 9076736,
+   "Size": 88779229
+  },
+  {
+   "Containers": 1,
+   "Created": 1787707551,
+   "Descriptor": {
+    "digest": "sha256:f066d41a232749d2b2446adb0983e7b51cae94c956f6bf5ba0d321c9397a3881",
+    "mediaType": "application/vnd.oci.image.index.v1+json",
+    "size": 856
+   },
+   "Id": "sha256:f066d41a232749d2b2446adb0983e7b51cae94c956f6bf5ba0d321c9397a3881",
+   "ParentId": "",
+   "RepoDigests": [
+    "weather-indexer-forecast@sha256:f066d41a232749d2b2446adb0983e7b51cae94c956f6bf5ba0d321c9397a3881"
+   ],
+   "RepoTags": [
+    "weather-indexer-forecast:latest"
+   ],
+   "SharedSize": 2303361024,
+   "Size": 3343351251
+  },
+  {
+   "Containers": 1,
+   "Created": 1787707551,
+   "Descriptor": {
+    "digest": "sha256:66841a0ec2e969a86ae81876049ae75f355ba26798f53e00f7d5ed8c246c2135",
+    "mediaType": "application/vnd.oci.image.index.v1+json",
+    "size": 856
+   },
+   "Id": "sha256:66841a0ec2e969a86ae81876049ae75f355ba26798f53e00f7d5ed8c246c2135",
+   "ParentId": "",
+   "RepoDigests": [
+    "weather-indexer-poll@sha256:66841a0ec2e969a86ae81876049ae75f355ba26798f53e00f7d5ed8c246c2135"
+   ],
+   "RepoTags": [
+    "weather-indexer-poll:latest"
+   ],
+   "SharedSize": 2303361024,
+   "Size": 3343351243
+  },
+  {
+   "Containers": 1,
+   "Created": 1787707551,
+   "Descriptor": {
+    "digest": "sha256:ce8f43d56a308dbed82fa1679f58e94e46f363cf20358943d9b5068408643ba0",
+    "mediaType": "application/vnd.oci.image.index.v1+json",
+    "size": 856
+   },
+   "Id": "sha256:ce8f43d56a308dbed82fa1679f58e94e46f363cf20358943d9b5068408643ba0",
+   "ParentId": "",
+   "RepoDigests": [
+    "weather-viewer-api@sha256:ce8f43d56a308dbed82fa1679f58e94e46f363cf20358943d9b5068408643ba0"
+   ],
+   "RepoTags": [
+    "weather-viewer-api:latest"
+   ],
+   "SharedSize": 2303361024,
+   "Size": 3343351249
+  },
+  {
+   "Containers": 1,
+   "Created": 1787707509,
+   "Descriptor": {
+    "digest": "sha256:c7e5beac0706e246239ac2f7168aead989f74399fe77e94ec19667d50a07df91",
+    "mediaType": "application/vnd.oci.image.index.v1+json",
+    "size": 856
+   },
+   "Id": "sha256:c7e5beac0706e246239ac2f7168aead989f74399fe77e94ec19667d50a07df91",
+   "ParentId": "",
+   "RepoDigests": [
+    "weather-site@sha256:c7e5beac0706e246239ac2f7168aead989f74399fe77e94ec19667d50a07df91"
+   ],
+   "RepoTags": [
+    "weather-site:latest"
+   ],
+   "SharedSize": 0,
+   "Size": 1973576261
+  },
+  {
+   "Containers": 1,
+   "Created": 1786463928,
+   "Descriptor": {
+    "digest": "sha256:a2d03767b0f9a619baeac47b278f1f5d9edbd7d2dff55eecbe3f99362988b971",
+    "mediaType": "application/vnd.oci.image.index.v1+json",
+    "size": 1609
+   },
+   "Id": "sha256:a2d03767b0f9a619baeac47b278f1f5d9edbd7d2dff55eecbe3f99362988b971",
+   "ParentId": "",
+   "RepoDigests": [
+    "example/agent@sha256:a2d03767b0f9a619baeac47b278f1f5d9edbd7d2dff55eecbe3f99362988b971"
+   ],
+   "RepoTags": [
+    "example/agent:latest"
+   ],
+   "SharedSize": 0,
+   "Size": 3980534775
+  },
+  {
+   "Containers": 1,
+   "Created": 1786320930,
+   "Descriptor": {
+    "digest": "sha256:2596d631b7b51b70cac18329d35cc936fd09b331242ed0898e96908dde55511d",
+    "mediaType": "application/vnd.oci.image.index.v1+json",
+    "size": 856
+   },
+   "Id": "sha256:2596d631b7b51b70cac18329d35cc936fd09b331242ed0898e96908dde55511d",
+   "ParentId": "",
+   "RepoDigests": [
+    "tracker-api@sha256:2596d631b7b51b70cac18329d35cc936fd09b331242ed0898e96908dde55511d"
+   ],
+   "RepoTags": [
+    "tracker-api:latest"
+   ],
+   "SharedSize": 258002944,
+   "Size": 335848859
+  },
+  {
+   "Containers": 1,
+   "Created": 1786320930,
+   "Descriptor": {
+    "digest": "sha256:570aad9afcfa508f6655380c4ba82ee89bf8655009b298a4b3bb304baa869eaf",
+    "mediaType": "application/vnd.oci.image.index.v1+json",
+    "size": 856
+   },
+   "Id": "sha256:570aad9afcfa508f6655380c4ba82ee89bf8655009b298a4b3bb304baa869eaf",
+   "ParentId": "",
+   "RepoDigests": [
+    "tracker-poller@sha256:570aad9afcfa508f6655380c4ba82ee89bf8655009b298a4b3bb304baa869eaf"
+   ],
+   "RepoTags": [
+    "tracker-poller:latest"
+   ],
+   "SharedSize": 258002944,
+   "Size": 335848865
+  },
+  {
+   "Containers": 1,
+   "Created": 1785149471,
+   "Descriptor": {
+    "digest": "sha256:6a773e5c3a246b65cbe74ce942b294292c0e5f81c138f703d111bc162f7d7c3d",
+    "mediaType": "application/vnd.oci.image.index.v1+json",
+    "size": 1609
+   },
+   "Id": "sha256:6a773e5c3a246b65cbe74ce942b294292c0e5f81c138f703d111bc162f7d7c3d",
+   "ParentId": "",
+   "RepoDigests": [
+    "ghcr.io/open-webui/open-webui@sha256:6a773e5c3a246b65cbe74ce942b294292c0e5f81c138f703d111bc162f7d7c3d"
+   ],
+   "RepoTags": [
+    "ghcr.io/open-webui/open-webui:main"
+   ],
+   "SharedSize": 0,
+   "Size": 7165963562
+  },
+  {
+   "Containers": 1,
+   "Created": 1782959433,
+   "Descriptor": {
+    "digest": "sha256:628f228f0fd5913a220438693576b29b6fe4dc1fa0a1298c0e98579fae28635f",
+    "mediaType": "application/vnd.oci.image.index.v1+json",
+    "size": 5129
+   },
+   "Id": "sha256:628f228f0fd5913a220438693576b29b6fe4dc1fa0a1298c0e98579fae28635f",
+   "ParentId": "",
+   "RepoDigests": [
+    "mariadb@sha256:628f228f0fd5913a220438693576b29b6fe4dc1fa0a1298c0e98579fae28635f"
+   ],
+   "RepoTags": [
+    "mariadb:latest"
+   ],
+   "SharedSize": 0,
+   "Size": 475952659
+  },
+  {
+   "Containers": 1,
+   "Created": 1782199002,
+   "Descriptor": {
+    "digest": "sha256:121a7a9ece6dc10b969f1f96eed64b4f07dfac0d0b8abc070f7cb83bbde86f63",
+    "mediaType": "application/vnd.docker.distribution.manifest.list.v2+json",
+    "size": 1079
+   },
+   "Id": "sha256:121a7a9ece6dc10b969f1f96eed64b4f07dfac0d0b8abc070f7cb83bbde86f63",
+   "ParentId": "",
+   "RepoDigests": [
+    "grafana/grafana@sha256:121a7a9ece6dc10b969f1f96eed64b4f07dfac0d0b8abc070f7cb83bbde86f63"
+   ],
+   "RepoTags": [
+    "grafana/grafana:latest"
+   ],
+   "SharedSize": 0,
+   "Size": 1575646637
+  },
+  {
+   "Containers": 1,
+   "Created": 1780363638,
+   "Descriptor": {
+    "digest": "sha256:3489c7674813ba5d8b1a9977baea8a6e553784dab7b84759d1014dbd78f7ebd5",
+    "mediaType": "application/vnd.docker.distribution.manifest.list.v2+json",
+    "size": 741
+   },
+   "Id": "sha256:3489c7674813ba5d8b1a9977baea8a6e553784dab7b84759d1014dbd78f7ebd5",
+   "ParentId": "",
+   "RepoDigests": [
+    "kindest/node@sha256:3489c7674813ba5d8b1a9977baea8a6e553784dab7b84759d1014dbd78f7ebd5"
+   ],
+   "RepoTags": [
+    "kindest/node@sha256:3489c7674813ba5d8b1a9977baea8a6e553784dab7b84759d1014dbd78f7ebd5"
+   ],
+   "SharedSize": 0,
+   "Size": 1314677566
+  },
+  {
+   "Containers": 1,
+   "Created": 1774397706,
+   "Descriptor": {
+    "digest": "sha256:8f958bdc1b4a422bfafd97cab4f69836401f616ae985d4b57a53d254f5bcb038",
+    "mediaType": "application/vnd.oci.image.index.v1+json",
+    "size": 1609
+   },
+   "Id": "sha256:8f958bdc1b4a422bfafd97cab4f69836401f616ae985d4b57a53d254f5bcb038",
+   "ParentId": "",
+   "RepoDigests": [
+    "nikolaik/python-nodejs@sha256:8f958bdc1b4a422bfafd97cab4f69836401f616ae985d4b57a53d254f5bcb038"
+   ],
+   "RepoTags": [
+    "nikolaik/python-nodejs:python3.11-nodejs20"
+   ],
+   "SharedSize": 0,
+   "Size": 2227953826
+  },
+  {
+   "Containers": 0,
+   "Created": 1719407277,
+   "Descriptor": {
+    "digest": "sha256:dd5aa20630a55722663bf83ba0cb74870cba130081303e32e3865007fa2aa35a",
+    "mediaType": "application/vnd.oci.image.index.v1+json",
+    "size": 1609
+   },
+   "Id": "sha256:dd5aa20630a55722663bf83ba0cb74870cba130081303e32e3865007fa2aa35a",
+   "ParentId": "",
+   "RepoDigests": [
+    "opencfd/openfoam-default@sha256:dd5aa20630a55722663bf83ba0cb74870cba130081303e32e3865007fa2aa35a"
+   ],
+   "RepoTags": [
+    "opencfd/openfoam-default:2406"
+   ],
+   "SharedSize": 0,
+   "Size": 2197930423
+  }
+ ],
+ "LayersSize": 34410701236,
+ "Volumes": [
+  {
+   "CreatedAt": "2026-05-24T15:12:18-06:00",
+   "Driver": "local",
+   "Labels": {
+    "com.docker.compose.project": "robot_sim",
+    "com.docker.compose.volume": "ros_ws_build"
+   },
+   "Mountpoint": "/home/u/.local/share/docker/volumes/robot_sim_ros_ws_build/_data",
+   "Name": "robot_sim_ros_ws_build",
+   "Options": null,
+   "Scope": "local",
+   "UsageData": {
+    "RefCount": 0,
+    "Size": 88142236
+   }
+  },
+  {
+   "CreatedAt": "2026-05-24T15:12:18-06:00",
+   "Driver": "local",
+   "Labels": {
+    "com.docker.compose.project": "robot_sim",
+    "com.docker.compose.volume": "ros_ws_install"
+   },
+   "Mountpoint": "/home/u/.local/share/docker/volumes/robot_sim_ros_ws_install/_data",
+   "Name": "robot_sim_ros_ws_install",
+   "Options": null,
+   "Scope": "local",
+   "UsageData": {
+    "RefCount": 0,
+    "Size": 150353991
+   }
+  },
+  {
+   "CreatedAt": "2026-10-05T15:32:56-06:00",
+   "Driver": "local",
+   "Labels": {
+    "com.docker.volume.anonymous": ""
+   },
+   "Mountpoint": "/home/u/.local/share/docker/volumes/83e57b6ae5503e631f927dd38ff58b066832adda12e5d1dda628c46964a22d3e/_data",
+   "Name": "83e57b6ae5503e631f927dd38ff58b066832adda12e5d1dda628c46964a22d3e",
+   "Options": null,
+   "Scope": "local",
+   "UsageData": {
+    "RefCount": 1,
+    "Size": 9852563144
+   }
+  },
+  {
+   "CreatedAt": "2026-06-13T19:15:37-06:00",
+   "Driver": "local",
+   "Labels": {
+    "com.docker.volume.anonymous": ""
+   },
+   "Mountpoint": "/home/u/.local/share/docker/volumes/40469d698520406894f5f61fadd88b4dab7e1782922c40b1ee23a4d49e92d834/_data",
+   "Name": "40469d698520406894f5f61fadd88b4dab7e1782922c40b1ee23a4d49e92d834",
+   "Options": null,
+   "Scope": "local",
+   "UsageData": {
+    "RefCount": 1,
+    "Size": 7398813278
+   }
+  },
+  {
+   "CreatedAt": "2026-08-11T15:03:25-06:00",
+   "Driver": "local",
+   "Labels": {
+    "com.docker.compose.project": "docker",
+    "com.docker.compose.volume": "llm-cache"
+   },
+   "Mountpoint": "/home/u/.local/share/docker/volumes/docker_llm-cache/_data",
+   "Name": "docker_llm-cache",
+   "Options": null,
+   "Scope": "local",
+   "UsageData": {
+    "RefCount": 0,
+    "Size": 12288
+   }
+  },
+  {
+   "CreatedAt": "2026-08-11T11:18:18-06:00",
+   "Driver": "local",
+   "Labels": {
+    "com.docker.compose.project": "wiki",
+    "com.docker.compose.volume": "wiki-pg"
+   },
+   "Mountpoint": "/home/u/.local/share/docker/volumes/wiki_wiki-pg/_data",
+   "Name": "wiki_wiki-pg",
+   "Options": null,
+   "Scope": "local",
+   "UsageData": {
+    "RefCount": 0,
+    "Size": 144445807
+   }
+  },
+  {
+   "CreatedAt": "2026-08-05T05:47:17-06:00",
+   "Driver": "local",
+   "Labels": {
+    "com.docker.compose.project": "tracker",
+    "com.docker.compose.volume": "pgdata"
+   },
+   "Mountpoint": "/home/u/.local/share/docker/volumes/tracker_pgdata/_data",
+   "Name": "tracker_pgdata",
+   "Options": null,
+   "Scope": "local",
+   "UsageData": {
+    "RefCount": 0,
+    "Size": 115930023
+   }
+  }
+ ]
+}

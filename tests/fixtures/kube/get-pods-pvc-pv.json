@@ -1,0 +1,405 @@
+{
+    "apiVersion": "v1",
+    "items": [
+        {
+            "apiVersion": "v1",
+            "kind": "Pod",
+            "metadata": {
+                "creationTimestamp": "2025-09-20T08:00:00Z",
+                "name": "coredns-6799fbcd5-xk2lp",
+                "namespace": "kube-system",
+                "uid": "0d4a8d5e-5b8f-4c47-9a5b-1c2d3e4f5a61",
+                "resourceVersion": "123456"
+            },
+            "spec": {
+                "nodeName": "k3s-node1",
+                "containers": [
+                    {
+                        "name": "coredns",
+                        "image": "example"
+                    }
+                ],
+                "volumes": [
+                    {
+                        "name": "config-volume",
+                        "configMap": {
+                            "defaultMode": 420,
+                            "items": [
+                                {
+                                    "key": "Corefile",
+                                    "path": "Corefile"
+                                }
+                            ],
+                            "name": "coredns"
+                        }
+                    },
+                    {
+                        "name": "kube-api-access-7xk2q",
+                        "projected": {
+                            "defaultMode": 420,
+                            "sources": [
+                                {
+                                    "serviceAccountToken": {
+                                        "expirationSeconds": 3607,
+                                        "path": "token"
+                                    }
+                                },
+                                {
+                                    "configMap": {
+                                        "items": [
+                                            {
+                                                "key": "ca.crt",
+                                                "path": "ca.crt"
+                                            }
+                                        ],
+                                        "name": "kube-root-ca.crt"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            "status": {
+                "phase": "Running",
+                "hostIP": "10.0.0.11",
+                "podIP": "10.42.0.17",
+                "qosClass": "BestEffort",
+                "startTime": "2025-09-20T08:00:01Z"
+            }
+        },
+        {
+            "apiVersion": "v1",
+            "kind": "Pod",
+            "metadata": {
+                "creationTimestamp": "2025-09-20T08:00:00Z",
+                "name": "web-0",
+                "namespace": "default",
+                "uid": "5b0e6a1c-3f7d-4b8e-9c2a-7d4e1f0a9b31",
+                "resourceVersion": "123456"
+            },
+            "spec": {
+                "nodeName": "k3s-node1",
+                "containers": [
+                    {
+                        "name": "web",
+                        "image": "example"
+                    }
+                ],
+                "volumes": [
+                    {
+                        "name": "cache",
+                        "emptyDir": {
+                            "sizeLimit": "1Gi"
+                        }
+                    },
+                    {
+                        "name": "data",
+                        "persistentVolumeClaim": {
+                            "claimName": "data-web-0"
+                        }
+                    },
+                    {
+                        "name": "kube-api-access-7xk2q",
+                        "projected": {
+                            "defaultMode": 420,
+                            "sources": [
+                                {
+                                    "serviceAccountToken": {
+                                        "expirationSeconds": 3607,
+                                        "path": "token"
+                                    }
+                                },
+                                {
+                                    "configMap": {
+                                        "items": [
+                                            {
+                                                "key": "ca.crt",
+                                                "path": "ca.crt"
+                                            }
+                                        ],
+                                        "name": "kube-root-ca.crt"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            "status": {
+                "phase": "Running",
+                "hostIP": "10.0.0.11",
+                "podIP": "10.42.0.17",
+                "qosClass": "BestEffort",
+                "startTime": "2025-09-20T08:00:01Z"
+            }
+        },
+        {
+            "apiVersion": "v1",
+            "kind": "Pod",
+            "metadata": {
+                "creationTimestamp": "2025-09-20T08:00:00Z",
+                "name": "report-job-28456120-abcde",
+                "namespace": "default",
+                "uid": "9a7c2e44-1b3d-4f6a-8e5c-2d1f0b9a8c77",
+                "resourceVersion": "123456"
+            },
+            "spec": {
+                "nodeName": "k3s-node1",
+                "containers": [
+                    {
+                        "name": "report",
+                        "image": "example"
+                    }
+                ],
+                "volumes": [
+                    {
+                        "name": "scratch",
+                        "emptyDir": {}
+                    },
+                    {
+                        "name": "kube-api-access-7xk2q",
+                        "projected": {
+                            "defaultMode": 420,
+                            "sources": [
+                                {
+                                    "serviceAccountToken": {
+                                        "expirationSeconds": 3607,
+                                        "path": "token"
+                                    }
+                                },
+                                {
+                                    "configMap": {
+                                        "items": [
+                                            {
+                                                "key": "ca.crt",
+                                                "path": "ca.crt"
+                                            }
+                                        ],
+                                        "name": "kube-root-ca.crt"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            "status": {
+                "phase": "Succeeded",
+                "hostIP": "10.0.0.11",
+                "podIP": "10.42.0.17",
+                "qosClass": "BestEffort",
+                "startTime": "2025-09-20T08:00:01Z"
+            }
+        },
+        {
+            "apiVersion": "v1",
+            "kind": "Pod",
+            "metadata": {
+                "creationTimestamp": "2025-09-20T08:00:00Z",
+                "name": "web-1",
+                "namespace": "default",
+                "uid": "4c3b2a19-0f8e-4d7c-b6a5-948372615049",
+                "resourceVersion": "123456"
+            },
+            "spec": {
+                "nodeName": "k3s-node2",
+                "containers": [
+                    {
+                        "name": "web",
+                        "image": "example"
+                    }
+                ],
+                "volumes": [
+                    {
+                        "name": "cache",
+                        "emptyDir": {}
+                    },
+                    {
+                        "name": "kube-api-access-7xk2q",
+                        "projected": {
+                            "defaultMode": 420,
+                            "sources": [
+                                {
+                                    "serviceAccountToken": {
+                                        "expirationSeconds": 3607,
+                                        "path": "token"
+                                    }
+                                },
+                                {
+                                    "configMap": {
+                                        "items": [
+                                            {
+                                                "key": "ca.crt",
+                                                "path": "ca.crt"
+                                            }
+                                        ],
+                                        "name": "kube-root-ca.crt"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            "status": {
+                "phase": "Running",
+                "hostIP": "10.0.0.11",
+                "podIP": "10.42.0.17",
+                "qosClass": "BestEffort",
+                "startTime": "2025-09-20T08:00:01Z"
+            }
+        },
+        {
+            "apiVersion": "v1",
+            "kind": "PersistentVolumeClaim",
+            "metadata": {
+                "name": "data-web-0",
+                "namespace": "default",
+                "uid": "7f3e2b1a-aaaa-4c3d-9e8f-111111111111",
+                "annotations": {
+                    "volume.kubernetes.io/selected-node": "k3s-node1",
+                    "volume.kubernetes.io/storage-provisioner": "rancher.io/local-path"
+                }
+            },
+            "spec": {
+                "accessModes": [
+                    "ReadWriteOnce"
+                ],
+                "resources": {
+                    "requests": {
+                        "storage": "5Gi"
+                    }
+                },
+                "storageClassName": "local-path",
+                "volumeMode": "Filesystem",
+                "volumeName": "pvc-7f3e2b1a-aaaa-4c3d-9e8f-111111111111"
+            },
+            "status": {
+                "accessModes": [
+                    "ReadWriteOnce"
+                ],
+                "capacity": {
+                    "storage": "5Gi"
+                },
+                "phase": "Bound"
+            }
+        },
+        {
+            "apiVersion": "v1",
+            "kind": "PersistentVolume",
+            "metadata": {
+                "name": "pvc-7f3e2b1a-aaaa-4c3d-9e8f-111111111111",
+                "annotations": {
+                    "local.path.provisioner/selected-node": "k3s-node1",
+                    "pv.kubernetes.io/provisioned-by": "rancher.io/local-path"
+                },
+                "finalizers": [
+                    "kubernetes.io/pv-protection"
+                ]
+            },
+            "spec": {
+                "accessModes": [
+                    "ReadWriteOnce"
+                ],
+                "capacity": {
+                    "storage": "5Gi"
+                },
+                "claimRef": {
+                    "apiVersion": "v1",
+                    "kind": "PersistentVolumeClaim",
+                    "name": "data-web-0",
+                    "namespace": "default",
+                    "uid": "7f3e2b1a-aaaa-4c3d-9e8f-111111111111"
+                },
+                "hostPath": {
+                    "path": "/var/lib/rancher/k3s/storage/pvc-7f3e2b1a-aaaa-4c3d-9e8f-111111111111_default_data-web-0",
+                    "type": "DirectoryOrCreate"
+                },
+                "nodeAffinity": {
+                    "required": {
+                        "nodeSelectorTerms": [
+                            {
+                                "matchExpressions": [
+                                    {
+                                        "key": "kubernetes.io/hostname",
+                                        "operator": "In",
+                                        "values": [
+                                            "k3s-node1"
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "persistentVolumeReclaimPolicy": "Delete",
+                "storageClassName": "local-path",
+                "volumeMode": "Filesystem"
+            },
+            "status": {
+                "phase": "Bound"
+            }
+        },
+        {
+            "apiVersion": "v1",
+            "kind": "PersistentVolume",
+            "metadata": {
+                "name": "pvc-2c4d6e8f-bbbb-4a1b-8c9d-222222222222",
+                "annotations": {
+                    "local.path.provisioner/selected-node": "k3s-node1",
+                    "pv.kubernetes.io/provisioned-by": "rancher.io/local-path"
+                },
+                "finalizers": [
+                    "kubernetes.io/pv-protection"
+                ]
+            },
+            "spec": {
+                "accessModes": [
+                    "ReadWriteOnce"
+                ],
+                "capacity": {
+                    "storage": "5Gi"
+                },
+                "claimRef": {
+                    "apiVersion": "v1",
+                    "kind": "PersistentVolumeClaim",
+                    "name": "old-data",
+                    "namespace": "default",
+                    "uid": "2c4d6e8f-bbbb-4a1b-8c9d-222222222222"
+                },
+                "hostPath": {
+                    "path": "/var/lib/rancher/k3s/storage/pvc-2c4d6e8f-bbbb-4a1b-8c9d-222222222222_default_old-data",
+                    "type": "DirectoryOrCreate"
+                },
+                "nodeAffinity": {
+                    "required": {
+                        "nodeSelectorTerms": [
+                            {
+                                "matchExpressions": [
+                                    {
+                                        "key": "kubernetes.io/hostname",
+                                        "operator": "In",
+                                        "values": [
+                                            "k3s-node1"
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "persistentVolumeReclaimPolicy": "Retain",
+                "storageClassName": "local-path",
+                "volumeMode": "Filesystem"
+            },
+            "status": {
+                "phase": "Released"
+            }
+        }
+    ],
+    "kind": "List",
+    "metadata": {
+        "resourceVersion": ""
+    }
+}

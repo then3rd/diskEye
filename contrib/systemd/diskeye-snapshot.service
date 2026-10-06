@@ -1,0 +1,8 @@
+[Unit]
+Description=diskeye daily disk-usage snapshot
+
+[Service]
+Type=oneshot
+Nice=19
+IOSchedulingClass=idle
+ExecStart=/usr/bin/env diskeye scan --quiet --keep 14

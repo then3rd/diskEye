@@ -1,0 +1,97 @@
+{
+ "sha256:aaa1": {
+  "Id": "sha256:aaa1",
+  "RootFS": {
+   "Type": "layers",
+   "Layers": [
+    "sha256:d1",
+    "sha256:d2"
+   ]
+  },
+  "GraphDriver": {
+   "Name": "overlay2",
+   "Data": {
+    "LowerDir": "/var/lib/docker/overlay2/base/diff",
+    "UpperDir": "/var/lib/docker/overlay2/app1/diff",
+    "MergedDir": "/var/lib/docker/overlay2/app1/merged",
+    "WorkDir": "/var/lib/docker/overlay2/app1/work"
+   }
+  }
+ },
+ "sha256:aaa2": {
+  "Id": "sha256:aaa2",
+  "RootFS": {
+   "Type": "layers",
+   "Layers": [
+    "sha256:d1",
+    "sha256:d3"
+   ]
+  },
+  "GraphDriver": {
+   "Name": "overlay2",
+   "Data": {
+    "LowerDir": "/var/lib/docker/overlay2/base/diff",
+    "UpperDir": "/var/lib/docker/overlay2/app2/diff",
+    "MergedDir": "/var/lib/docker/overlay2/app2/merged",
+    "WorkDir": "/var/lib/docker/overlay2/app2/work"
+   }
+  }
+ },
+ "sha256:aaa3": {
+  "Id": "sha256:aaa3",
+  "RootFS": {
+   "Type": "layers",
+   "Layers": [
+    "sha256:d4"
+   ]
+  },
+  "GraphDriver": {
+   "Name": "overlay2",
+   "Data": {
+    "UpperDir": "/var/lib/docker/overlay2/old/diff",
+    "MergedDir": "/var/lib/docker/overlay2/old/merged",
+    "WorkDir": "/var/lib/docker/overlay2/old/work"
+   }
+  }
+ },
+ "c1web": {
+  "Id": "c1web",
+  "Name": "/web",
+  "LogPath": "/var/lib/docker/containers/c1web/c1web-json.log",
+  "GraphDriver": {
+   "Name": "overlay2",
+   "Data": {
+    "LowerDir": "/var/lib/docker/overlay2/web-rw-init/diff:/var/lib/docker/overlay2/app1/diff:/var/lib/docker/overlay2/base/diff",
+    "UpperDir": "/var/lib/docker/overlay2/web-rw/diff",
+    "MergedDir": "/var/lib/docker/overlay2/web-rw/merged",
+    "WorkDir": "/var/lib/docker/overlay2/web-rw/work"
+   }
+  },
+  "HostConfig": {
+   "LogConfig": {
+    "Type": "json-file",
+    "Config": {}
+   }
+  }
+ },
+ "c2job": {
+  "Id": "c2job",
+  "Name": "/job",
+  "LogPath": "/var/lib/docker/containers/c2job/c2job-json.log",
+  "GraphDriver": {
+   "Name": "overlay2",
+   "Data": {
+    "LowerDir": "/var/lib/docker/overlay2/job-rw-init/diff:/var/lib/docker/overlay2/app1/diff:/var/lib/docker/overlay2/base/diff",
+    "UpperDir": "/var/lib/docker/overlay2/job-rw/diff",
+    "MergedDir": "/var/lib/docker/overlay2/job-rw/merged",
+    "WorkDir": "/var/lib/docker/overlay2/job-rw/work"
+   }
+  },
+  "HostConfig": {
+   "LogConfig": {
+    "Type": "json-file",
+    "Config": {}
+   }
+  }
+ }
+}

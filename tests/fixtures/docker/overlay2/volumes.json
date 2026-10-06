@@ -1,0 +1,23 @@
+{
+ "Volumes": [
+  {
+   "CreatedAt": "2025-09-01T10:00:00Z",
+   "Driver": "local",
+   "Labels": null,
+   "Mountpoint": "/var/lib/docker/volumes/pgdata/_data",
+   "Name": "pgdata",
+   "Options": null,
+   "Scope": "local"
+  },
+  {
+   "CreatedAt": "2025-09-01T10:00:00Z",
+   "Driver": "local",
+   "Labels": null,
+   "Mountpoint": "/var/lib/docker/volumes/scratch/_data",
+   "Name": "scratch",
+   "Options": null,
+   "Scope": "local"
+  }
+ ],
+ "Warnings": null
+}

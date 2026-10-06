@@ -1,0 +1,30 @@
+[
+ {
+  "id": "ctr-web",
+  "names": [
+   "web"
+  ],
+  "image": "img-nginx",
+  "layer": "rwweb",
+  "metadata": "{\"image-name\": \"docker.io/library/nginx:1.27\", \"image-id\": \"img-nginx\", \"name\": \"web\", \"created-at\": 1758355200, \"mountlabel\": \"\"}",
+  "created": "2025-09-20T08:00:00Z",
+  "flags": {
+   "MountLabel": "",
+   "ProcessLabel": ""
+  }
+ },
+ {
+  "id": "ctr-job",
+  "names": [
+   "job"
+  ],
+  "image": "img-nginx",
+  "layer": "rwjob",
+  "metadata": "{\"image-name\": \"docker.io/library/nginx:1.27\", \"image-id\": \"img-nginx\", \"name\": \"job\", \"created-at\": 1758355200, \"mountlabel\": \"\"}",
+  "created": "2025-09-20T08:00:00Z",
+  "flags": {
+   "MountLabel": "",
+   "ProcessLabel": ""
+  }
+ }
+]

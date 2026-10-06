@@ -1,0 +1,28 @@
+[
+ {
+  "Name": "cache",
+  "Driver": "local",
+  "Mountpoint": "/home/alice/.local/share/containers/storage/volumes/cache/_data",
+  "CreatedAt": "2025-09-20T08:00:00Z",
+  "Labels": {},
+  "Scope": "local",
+  "Options": {},
+  "MountCount": 0,
+  "NeedsCopyUp": true,
+  "NeedsChown": true,
+  "LockNumber": 4
+ },
+ {
+  "Name": "pgdata",
+  "Driver": "local",
+  "Mountpoint": "/home/alice/.local/share/containers/storage/volumes/pgdata/_data",
+  "CreatedAt": "2025-09-20T08:00:00Z",
+  "Labels": {},
+  "Scope": "local",
+  "Options": {},
+  "MountCount": 0,
+  "NeedsCopyUp": true,
+  "NeedsChown": true,
+  "LockNumber": 3
+ }
+]

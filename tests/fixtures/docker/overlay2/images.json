@@ -1,0 +1,41 @@
+[
+ {
+  "Containers": -1,
+  "Created": 1756000000,
+  "Id": "sha256:aaa1",
+  "Labels": null,
+  "ParentId": "",
+  "RepoDigests": [],
+  "RepoTags": [
+   "app:1"
+  ],
+  "SharedSize": -1,
+  "Size": 104857600
+ },
+ {
+  "Containers": -1,
+  "Created": 1757000000,
+  "Id": "sha256:aaa2",
+  "Labels": null,
+  "ParentId": "",
+  "RepoDigests": [],
+  "RepoTags": [
+   "app:2"
+  ],
+  "SharedSize": -1,
+  "Size": 115343360
+ },
+ {
+  "Containers": -1,
+  "Created": 1750000000,
+  "Id": "sha256:aaa3",
+  "Labels": null,
+  "ParentId": "",
+  "RepoDigests": [],
+  "RepoTags": [
+   "<none>:<none>"
+  ],
+  "SharedSize": -1,
+  "Size": 5242880
+ }
+]

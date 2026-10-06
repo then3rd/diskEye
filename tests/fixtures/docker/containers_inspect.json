@@ -1,0 +1,249 @@
+{
+ "04c702eca26c3ff817c45e6ee2ccc46b7b73a7266775206881c19e2737bddd21": {
+  "Driver": "overlayfs",
+  "HostConfig": {
+   "LogConfig": {
+    "Config": {},
+    "Type": "json-file"
+   }
+  },
+  "Id": "04c702eca26c3ff817c45e6ee2ccc46b7b73a7266775206881c19e2737bddd21",
+  "LogPath": "/home/u/.local/share/docker/containers/04c702eca26c3ff817c45e6ee2ccc46b7b73a7266775206881c19e2737bddd21/04c702eca26c3ff817c45e6ee2ccc46b7b73a7266775206881c19e2737bddd21-json.log",
+  "Name": "/grafana",
+  "Storage": {
+   "RootFS": {
+    "Snapshot": {
+     "Name": "overlayfs"
+    }
+   }
+  }
+ },
+ "16d8bffaa87227abc8f1466bdbf3f579b30cafd6805323b98ad7f54526c89944": {
+  "Driver": "overlayfs",
+  "HostConfig": {
+   "LogConfig": {
+    "Config": {},
+    "Type": "json-file"
+   }
+  },
+  "Id": "16d8bffaa87227abc8f1466bdbf3f579b30cafd6805323b98ad7f54526c89944",
+  "LogPath": "/home/u/.local/share/docker/containers/16d8bffaa87227abc8f1466bdbf3f579b30cafd6805323b98ad7f54526c89944/16d8bffaa87227abc8f1466bdbf3f579b30cafd6805323b98ad7f54526c89944-json.log",
+  "Name": "/tracker-poller-1",
+  "Storage": {
+   "RootFS": {
+    "Snapshot": {
+     "Name": "overlayfs"
+    }
+   }
+  }
+ },
+ "1e0ba8cc1873b32dfa055a7f47ca2b9529f1f4085862ed905bb81e052a505791": {
+  "Driver": "overlayfs",
+  "HostConfig": {
+   "LogConfig": {
+    "Config": {},
+    "Type": "json-file"
+   }
+  },
+  "Id": "1e0ba8cc1873b32dfa055a7f47ca2b9529f1f4085862ed905bb81e052a505791",
+  "LogPath": "/home/u/.local/share/docker/containers/1e0ba8cc1873b32dfa055a7f47ca2b9529f1f4085862ed905bb81e052a505791/1e0ba8cc1873b32dfa055a7f47ca2b9529f1f4085862ed905bb81e052a505791-json.log",
+  "Name": "/agent-97130776",
+  "Storage": {
+   "RootFS": {
+    "Snapshot": {
+     "Name": "overlayfs"
+    }
+   }
+  }
+ },
+ "3a0a6f0e41082ed6dfa9cfdfa1130323b5086243c130743a31c81fd9751d4f9b": {
+  "Driver": "overlayfs",
+  "HostConfig": {
+   "LogConfig": {
+    "Config": {},
+    "Type": "json-file"
+   }
+  },
+  "Id": "3a0a6f0e41082ed6dfa9cfdfa1130323b5086243c130743a31c81fd9751d4f9b",
+  "LogPath": "/home/u/.local/share/docker/containers/3a0a6f0e41082ed6dfa9cfdfa1130323b5086243c130743a31c81fd9751d4f9b/3a0a6f0e41082ed6dfa9cfdfa1130323b5086243c130743a31c81fd9751d4f9b-json.log",
+  "Name": "/ml-worker",
+  "Storage": {
+   "RootFS": {
+    "Snapshot": {
+     "Name": "overlayfs"
+    }
+   }
+  }
+ },
+ "3c3e41a36ff78a6c6decfc4da17637c283cfe70d52cdd9a27068b65735ca493d": {
+  "Driver": "overlayfs",
+  "HostConfig": {
+   "LogConfig": {
+    "Config": {},
+    "Type": "json-file"
+   }
+  },
+  "Id": "3c3e41a36ff78a6c6decfc4da17637c283cfe70d52cdd9a27068b65735ca493d",
+  "LogPath": "/home/u/.local/share/docker/containers/3c3e41a36ff78a6c6decfc4da17637c283cfe70d52cdd9a27068b65735ca493d/3c3e41a36ff78a6c6decfc4da17637c283cfe70d52cdd9a27068b65735ca493d-json.log",
+  "Name": "/shop-dev-control-plane",
+  "Storage": {
+   "RootFS": {
+    "Snapshot": {
+     "Name": "overlayfs"
+    }
+   }
+  }
+ },
+ "6bc74801ff15c3649537a69796dcd8bbfad27d72e5d82f11f2fdc53845e58fe2": {
+  "Driver": "overlayfs",
+  "HostConfig": {
+   "LogConfig": {
+    "Config": {},
+    "Type": "json-file"
+   }
+  },
+  "Id": "6bc74801ff15c3649537a69796dcd8bbfad27d72e5d82f11f2fdc53845e58fe2",
+  "LogPath": "/home/u/.local/share/docker/containers/6bc74801ff15c3649537a69796dcd8bbfad27d72e5d82f11f2fdc53845e58fe2/6bc74801ff15c3649537a69796dcd8bbfad27d72e5d82f11f2fdc53845e58fe2-json.log",
+  "Name": "/indexer-poll",
+  "Storage": {
+   "RootFS": {
+    "Snapshot": {
+     "Name": "overlayfs"
+    }
+   }
+  }
+ },
+ "7a9236bbfcce37b637e18c48710437e3b9dede67b25f70e430d631964c06e8d9": {
+  "Driver": "overlayfs",
+  "HostConfig": {
+   "LogConfig": {
+    "Config": {},
+    "Type": "json-file"
+   }
+  },
+  "Id": "7a9236bbfcce37b637e18c48710437e3b9dede67b25f70e430d631964c06e8d9",
+  "LogPath": "/home/u/.local/share/docker/containers/7a9236bbfcce37b637e18c48710437e3b9dede67b25f70e430d631964c06e8d9/7a9236bbfcce37b637e18c48710437e3b9dede67b25f70e430d631964c06e8d9-json.log",
+  "Name": "/indexer-forecast",
+  "Storage": {
+   "RootFS": {
+    "Snapshot": {
+     "Name": "overlayfs"
+    }
+   }
+  }
+ },
+ "8bd9908cd50d1f743439c335f1d4fc06a8b126bd7a89267164cf082ae36e5e66": {
+  "Driver": "overlayfs",
+  "HostConfig": {
+   "LogConfig": {
+    "Config": {},
+    "Type": "json-file"
+   }
+  },
+  "Id": "8bd9908cd50d1f743439c335f1d4fc06a8b126bd7a89267164cf082ae36e5e66",
+  "LogPath": "/home/u/.local/share/docker/containers/8bd9908cd50d1f743439c335f1d4fc06a8b126bd7a89267164cf082ae36e5e66/8bd9908cd50d1f743439c335f1d4fc06a8b126bd7a89267164cf082ae36e5e66-json.log",
+  "Name": "/agent-gateway",
+  "Storage": {
+   "RootFS": {
+    "Snapshot": {
+     "Name": "overlayfs"
+    }
+   }
+  }
+ },
+ "976db59a3308ea88afa01724661f979e845c64c355b466512e1b4f348860f27e": {
+  "Driver": "overlayfs",
+  "HostConfig": {
+   "LogConfig": {
+    "Config": {},
+    "Type": "json-file"
+   }
+  },
+  "Id": "976db59a3308ea88afa01724661f979e845c64c355b466512e1b4f348860f27e",
+  "LogPath": "/home/u/.local/share/docker/containers/976db59a3308ea88afa01724661f979e845c64c355b466512e1b4f348860f27e/976db59a3308ea88afa01724661f979e845c64c355b466512e1b4f348860f27e-json.log",
+  "Name": "/tracker-api-1",
+  "Storage": {
+   "RootFS": {
+    "Snapshot": {
+     "Name": "overlayfs"
+    }
+   }
+  }
+ },
+ "98d65b2b70c70345d1037983bff305a12eb8008417653dfe235a4ac1e8f62d25": {
+  "Driver": "overlayfs",
+  "HostConfig": {
+   "LogConfig": {
+    "Config": {},
+    "Type": "json-file"
+   }
+  },
+  "Id": "98d65b2b70c70345d1037983bff305a12eb8008417653dfe235a4ac1e8f62d25",
+  "LogPath": "/home/u/.local/share/docker/containers/98d65b2b70c70345d1037983bff305a12eb8008417653dfe235a4ac1e8f62d25/98d65b2b70c70345d1037983bff305a12eb8008417653dfe235a4ac1e8f62d25-json.log",
+  "Name": "/site",
+  "Storage": {
+   "RootFS": {
+    "Snapshot": {
+     "Name": "overlayfs"
+    }
+   }
+  }
+ },
+ "a455c9d7c3e783e322401c1496bb7a9c94afdf0f1079c0ab2c374ebe8de2b90f": {
+  "Driver": "overlayfs",
+  "HostConfig": {
+   "LogConfig": {
+    "Config": {},
+    "Type": "json-file"
+   }
+  },
+  "Id": "a455c9d7c3e783e322401c1496bb7a9c94afdf0f1079c0ab2c374ebe8de2b90f",
+  "LogPath": "/home/u/.local/share/docker/containers/a455c9d7c3e783e322401c1496bb7a9c94afdf0f1079c0ab2c374ebe8de2b90f/a455c9d7c3e783e322401c1496bb7a9c94afdf0f1079c0ab2c374ebe8de2b90f-json.log",
+  "Name": "/mariadb",
+  "Storage": {
+   "RootFS": {
+    "Snapshot": {
+     "Name": "overlayfs"
+    }
+   }
+  }
+ },
+ "e221d18a979e5d6f91fa3cae435d96967cbe367223ed0a26b2b72d460afb1854": {
+  "Driver": "overlayfs",
+  "HostConfig": {
+   "LogConfig": {
+    "Config": {},
+    "Type": "json-file"
+   }
+  },
+  "Id": "e221d18a979e5d6f91fa3cae435d96967cbe367223ed0a26b2b72d460afb1854",
+  "LogPath": "/home/u/.local/share/docker/containers/e221d18a979e5d6f91fa3cae435d96967cbe367223ed0a26b2b72d460afb1854/e221d18a979e5d6f91fa3cae435d96967cbe367223ed0a26b2b72d460afb1854-json.log",
+  "Name": "/viewer-api",
+  "Storage": {
+   "RootFS": {
+    "Snapshot": {
+     "Name": "overlayfs"
+    }
+   }
+  }
+ },
+ "e7585654991cc13a2a4e6a68c4a98161e45d4024f3b3c0cc45d14a98c1806bda": {
+  "Driver": "overlayfs",
+  "HostConfig": {
+   "LogConfig": {
+    "Config": {},
+    "Type": "json-file"
+   }
+  },
+  "Id": "e7585654991cc13a2a4e6a68c4a98161e45d4024f3b3c0cc45d14a98c1806bda",
+  "LogPath": "/home/u/.local/share/docker/containers/e7585654991cc13a2a4e6a68c4a98161e45d4024f3b3c0cc45d14a98c1806bda/e7585654991cc13a2a4e6a68c4a98161e45d4024f3b3c0cc45d14a98c1806bda-json.log",
+  "Name": "/open-webui",
+  "Storage": {
+   "RootFS": {
+    "Snapshot": {
+     "Name": "overlayfs"
+    }
+   }
+  }
+ }
+}

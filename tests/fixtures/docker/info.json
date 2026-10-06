@@ -1,0 +1,25 @@
+{
+ "Containerd": {
+  "Address": "/run/user/1000/docker/containerd/containerd.sock",
+  "Namespaces": {
+   "Containers": "moby",
+   "Plugins": "plugins.moby"
+  }
+ },
+ "DockerRootDir": "/home/u/.local/share/docker",
+ "Driver": "overlayfs",
+ "DriverStatus": [
+  [
+   "driver-type",
+   "io.containerd.snapshotter.v1"
+  ]
+ ],
+ "LoggingDriver": "json-file",
+ "OperatingSystem": "Arch Linux",
+ "SecurityOptions": [
+  "name=seccomp,profile=builtin",
+  "name=rootless",
+  "name=cgroupns"
+ ],
+ "ServerVersion": "29.2.0"
+}

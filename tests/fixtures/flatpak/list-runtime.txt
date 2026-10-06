@@ -1,0 +1,8 @@
+org.freedesktop.Platform	24.08	system	595.6 MB
+org.freedesktop.Platform	23.08	system	560.1 MB
+org.freedesktop.Platform.GL.default	24.08	system	366.0 MB
+org.freedesktop.Platform.Locale	24.08	system	18.3 kB
+org.mozilla.firefox.Locale	stable	system	7.2 MB
+org.gnome.Platform	46	system	1.0 GB
+org.gnome.Platform	47	user	1.1 GB
+org.kde.Platform	6.7	system	1.2 GB

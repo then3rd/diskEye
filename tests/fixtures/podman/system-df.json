@@ -1,0 +1,91 @@
+{
+ "ImagesSize": 110100480,
+ "Images": [
+  {
+   "Repository": "docker.io/library/alpine",
+   "Tag": "3.20",
+   "ImageID": "img-alpine",
+   "Created": "2025-09-14T10:22:35Z",
+   "Size": 7340032,
+   "SharedSize": 7340032,
+   "UniqueSize": 0,
+   "Containers": 0
+  },
+  {
+   "Repository": "docker.io/library/nginx",
+   "Tag": "1.27",
+   "ImageID": "img-nginx",
+   "Created": "2025-09-14T10:22:35Z",
+   "Size": 49283072,
+   "SharedSize": 7340032,
+   "UniqueSize": 41943040,
+   "Containers": 2
+  },
+  {
+   "Repository": "docker.io/library/python",
+   "Tag": "3.12-slim",
+   "ImageID": "img-python",
+   "Created": "2025-09-14T10:22:35Z",
+   "Size": 59768832,
+   "SharedSize": 7340032,
+   "UniqueSize": 52428800,
+   "Containers": 0
+  },
+  {
+   "Repository": "<none>",
+   "Tag": "<none>",
+   "ImageID": "img-dangling",
+   "Created": "2025-08-01T00:00:00Z",
+   "Size": 3145728,
+   "SharedSize": 0,
+   "UniqueSize": 3145728,
+   "Containers": 0
+  }
+ ],
+ "Containers": [
+  {
+   "ContainerID": "ctr-web",
+   "Image": "img-nginx",
+   "Command": [
+    "nginx",
+    "-g",
+    "daemon off;"
+   ],
+   "LocalVolumes": 1,
+   "Size": 51380224,
+   "RWSize": 2097152,
+   "Created": "2025-09-20T08:00:00Z",
+   "Status": "running",
+   "Names": "web"
+  },
+  {
+   "ContainerID": "ctr-job",
+   "Image": "img-nginx",
+   "Command": [
+    "sh",
+    "-c",
+    "make report"
+   ],
+   "LocalVolumes": 0,
+   "Size": 55574528,
+   "RWSize": 6291456,
+   "Created": "2025-09-21T08:00:00Z",
+   "Status": "exited",
+   "Names": "job"
+  }
+ ],
+ "Volumes": [
+  {
+   "VolumeName": "pgdata",
+   "Links": 1,
+   "Size": 31457280,
+   "ReclaimableSize": 0
+  },
+  {
+   "VolumeName": "cache",
+   "Links": 0,
+   "Size": 4194304,
+   "ReclaimableSize": 4194304
+  }
+ ]
+}

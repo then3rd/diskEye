@@ -1,0 +1,93 @@
+[
+    {
+        "children": [
+            {
+                "name": "file",
+                "info": {
+                    "children": [
+                    ],
+                    "virtual-size": 328192,
+                    "filename": "/var/lib/libvirt/images/web1.qcow2",
+                    "format": "file",
+                    "actual-size": 208896,
+                    "format-specific": {
+                        "type": "file",
+                        "data": {
+                        }
+                    },
+                    "dirty-flag": false
+                }
+            }
+        ],
+        "backing-filename-format": "qcow2",
+        "snapshots": [
+            {
+                "icount": 0,
+                "vm-clock-nsec": 0,
+                "name": "clean-install",
+                "date-sec": 1791247648,
+                "date-nsec": 384403000,
+                "vm-clock-sec": 0,
+                "id": "1",
+                "vm-state-size": 0
+            }
+        ],
+        "virtual-size": 21474836480,
+        "filename": "/var/lib/libvirt/images/web1.qcow2",
+        "cluster-size": 65536,
+        "format": "qcow2",
+        "actual-size": 208896,
+        "format-specific": {
+            "type": "qcow2",
+            "data": {
+                "compat": "1.1",
+                "compression-type": "zlib",
+                "lazy-refcounts": false,
+                "refcount-bits": 16,
+                "corrupt": false,
+                "extended-l2": false
+            }
+        },
+        "full-backing-filename": "/var/lib/libvirt/images/base.qcow2",
+        "backing-filename": "/var/lib/libvirt/images/base.qcow2",
+        "dirty-flag": false
+    },
+    {
+        "children": [
+            {
+                "name": "file",
+                "info": {
+                    "children": [
+                    ],
+                    "virtual-size": 197120,
+                    "filename": "/var/lib/libvirt/images/base.qcow2",
+                    "format": "file",
+                    "actual-size": 200704,
+                    "format-specific": {
+                        "type": "file",
+                        "data": {
+                        }
+                    },
+                    "dirty-flag": false
+                }
+            }
+        ],
+        "virtual-size": 21474836480,
+        "filename": "/var/lib/libvirt/images/base.qcow2",
+        "cluster-size": 65536,
+        "format": "qcow2",
+        "actual-size": 200704,
+        "format-specific": {
+            "type": "qcow2",
+            "data": {
+                "compat": "1.1",
+                "compression-type": "zlib",
+                "lazy-refcounts": false,
+                "refcount-bits": 16,
+                "corrupt": false,
+                "extended-l2": false
+            }
+        },
+        "dirty-flag": false
+    }
+]

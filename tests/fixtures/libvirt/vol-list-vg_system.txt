@@ -1,0 +1,9 @@
+ Name         Path                        Type    Capacity     Allocation
+---------------------------------------------------------------------------
+ lv_home      /dev/vg_system/lv_home      block   305.00 GiB   305.00 GiB
+ lv_data      /dev/vg_system/lv_data      block   50.00 GiB    50.00 GiB
+ lv_root      /dev/vg_system/lv_root      block   45.00 GiB    45.00 GiB
+ lv_swap      /dev/vg_system/lv_swap      block   16.00 GiB    16.00 GiB
+ lv_var       /dev/vg_system/lv_var       block   50.00 GiB    50.00 GiB
+ lv_vm_test   /dev/vg_system/lv_vm_test   block   30.00 GiB    30.00 GiB
+
