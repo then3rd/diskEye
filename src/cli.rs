@@ -88,8 +88,11 @@ enum Cmd {
     },
     /// List or run reclaim actions from a snapshot.
     Clean {
-        /// Entity id from `diskeye clean --list` or the report.
-        id: Option<u32>,
+        /// Entity ids from `diskeye clean --list` or the report.
+        ids: Vec<u32>,
+        /// Also run every `safe` item that has an action.
+        #[arg(long)]
+        safe: bool,
         #[arg(long)]
         snapshot: Option<PathBuf>,
         #[arg(long)]
@@ -97,7 +100,7 @@ enum Cmd {
         /// Show what would happen without doing it.
         #[arg(long)]
         dry_run: bool,
-        /// Don't ask for confirmation (never applies to `danger` items).
+        /// Don't ask for confirmation (never applies to `danger` items or to root).
         #[arg(short, long)]
         yes: bool,
     },
@@ -342,7 +345,7 @@ pub fn main() -> Result<()> {
                 println!("\n{n} entities discovered (sizes need a full scan: `diskeye scan`)");
             }
         }
-        Some(Cmd::Clean { id, snapshot, list, dry_run, yes }) => clean(id, snapshot, list, dry_run, yes)?,
+        Some(Cmd::Clean { ids, safe, snapshot, list, dry_run, yes }) => clean(ids, safe, snapshot, list, dry_run, yes)?,
         Some(Cmd::Snapshots) => {
             for p in snapshot::list() {
                 let size = std::fs::metadata(&p).map(|m| m.len()).unwrap_or(0);
@@ -357,10 +360,10 @@ pub fn main() -> Result<()> {
     Ok(())
 }
 
-fn clean(id: Option<u32>, snapshot: Option<PathBuf>, list: bool, dry_run: bool, yes: bool) -> Result<()> {
+fn clean(ids: Vec<u32>, safe: bool, snapshot: Option<PathBuf>, list: bool, dry_run: bool, yes: bool) -> Result<()> {
     let (snap, _) = load(snapshot)?;
     let items = crate::views::reclaim(&snap);
-    if list || id.is_none() {
+    if list || (ids.is_empty() && !safe) {
         for it in &items {
             let e = &snap.entities[it.entity as usize];
             println!(
@@ -378,41 +381,73 @@ fn clean(id: Option<u32>, snapshot: Option<PathBuf>, list: bool, dry_run: bool, 
         }
         return Ok(());
     }
-    let id = id.unwrap();
-    let it = items.iter().find(|i| i.entity == id).with_context(|| format!("no reclaimable item with id {id}"))?;
-    let e = &snap.entities[id as usize];
-    let action = it.action.as_ref().with_context(|| format!("{} has no automatic action; {}", e.name, it.reason))?;
-    println!("{} · {}  ({}, ~{})", e.group, e.name, it.risk.label(), model::fmt_size(it.bytes));
-    println!("{}", it.reason);
-    for line in crate::actions::describe(action) {
-        println!("  • {line}");
+    let mut chosen = Vec::new();
+    for id in ids {
+        let it = items.iter().find(|i| i.entity == id).with_context(|| format!("no reclaimable item with id {id}"))?;
+        chosen.push(it);
     }
-    if let Err(e) = crate::actions::preflight(action) {
-        bail!("cannot run: {e:#}");
+    if safe {
+        chosen.extend(items.iter().filter(|i| i.risk == model::Risk::Safe && i.action.is_some()));
     }
+    chosen.sort_by_key(|i| i.entity);
+    chosen.dedup_by_key(|i| i.entity);
+
+    // Show everything first; drop items that can't run.
+    let mut runnable = Vec::new();
+    for it in chosen {
+        let e = &snap.entities[it.entity as usize];
+        println!("{} · {}  ({}, ~{})", e.group, e.name, it.risk.label(), model::fmt_size(it.bytes));
+        println!("  {}", it.reason);
+        let Some(action) = &it.action else {
+            println!("  skipped: no automatic action");
+            continue;
+        };
+        for line in crate::actions::describe(action) {
+            println!("  • {line}");
+        }
+        match crate::actions::preflight(action) {
+            Ok(()) => runnable.push((it, action)),
+            Err(err) => println!("  skipped: cannot run: {err:#}"),
+        }
+    }
+    if runnable.is_empty() {
+        bail!("nothing to run");
+    }
+    let total: u64 = runnable.iter().map(|(it, _)| it.bytes).sum();
     if dry_run {
-        println!("(dry run — nothing changed)");
+        println!("(dry run — would run {} item(s), ~{}; nothing changed)", runnable.len(), model::fmt_size(total));
         return Ok(());
     }
-    let need_typed = it.risk == model::Risk::Danger || crate::util::is_root();
-    if need_typed {
-        println!("Type the name `{}` to confirm:", e.name);
-        let mut line = String::new();
-        std::io::stdin().read_line(&mut line)?;
-        if line.trim() != e.name {
-            bail!("confirmation did not match; nothing changed");
-        }
-    } else if !yes {
-        print!("Proceed? [y/N] ");
+    let strict = crate::util::is_root() || runnable.iter().any(|(it, _)| it.risk == model::Risk::Danger);
+    if strict || !yes {
+        print!(
+            "Run {} item(s), freeing ~{}? Type `{}` to confirm: ",
+            runnable.len(),
+            model::fmt_size(total),
+            crate::actions::confirm_word(strict)
+        );
         std::io::Write::flush(&mut std::io::stdout())?;
         let mut line = String::new();
         std::io::stdin().read_line(&mut line)?;
-        if !matches!(line.trim(), "y" | "Y" | "yes") {
-            println!("aborted");
+        if !crate::actions::confirmed(&line, strict) {
+            println!("aborted; nothing changed");
             return Ok(());
         }
     }
-    crate::actions::execute(action, it.risk, it.bytes)?;
+    let mut failed = Vec::new();
+    for (it, action) in &runnable {
+        let name = &snap.entities[it.entity as usize].name;
+        match crate::actions::execute(action, it.risk, it.bytes) {
+            Ok(()) => println!("done: {name}"),
+            Err(err) => {
+                println!("failed: {name}: {err:#}");
+                failed.push(name.as_str());
+            }
+        }
+    }
+    if !failed.is_empty() {
+        bail!("{} of {} item(s) failed: {}", failed.len(), runnable.len(), failed.join(", "));
+    }
     println!("done. Re-scan to see the new totals.");
     Ok(())
 }

@@ -804,13 +804,15 @@ pub async fn entity(State(st): St, AxPath(id): AxPath<u32>) -> Response {
     ok(&v)
 }
 
-fn confirm_phrase(st: &AppState, id: u32) -> (String, &'static str) {
+/// (strict, reason): whether running `id` needs the strict confirmation word.
+fn confirm_kind(st: &AppState, id: u32) -> (bool, &'static str) {
     let e = &st.snap.entities[id as usize];
-    let danger = e.reclaim.as_ref().is_some_and(|r| r.risk == Risk::Danger);
-    if danger || st.is_root {
-        (e.name.clone(), if danger { "danger" } else { "root" })
+    if e.reclaim.as_ref().is_some_and(|r| r.risk == Risk::Danger) {
+        (true, "danger")
+    } else if st.is_root {
+        (true, "root")
     } else {
-        ("yes".into(), "normal")
+        (false, "normal")
     }
 }
 
@@ -831,7 +833,7 @@ pub async fn reclaim(State(st): St) -> Response {
                 "group": e.group, "group_idx": st.group_of(r.entity), "risk": r.risk.label(), "bytes": r.bytes,
                 "reason": r.reason, "has_action": r.action.is_some(),
                 "action": r.action.as_ref().map(|a| json!({"label": a.label, "steps": crate::actions::describe(a)})),
-                "paths": paths, "confirm": confirm_phrase(&st, r.entity).1,
+                "paths": paths, "confirm": confirm_kind(&st, r.entity).1,
                 "done": executed.get(&r.entity).map(|(ok, msg)| json!({"ok": ok, "message": msg})),
             })
         })
@@ -996,7 +998,8 @@ pub async fn action_preview(State(st): St, AxPath(id): AxPath<u32>) -> Response 
     let pre = tokio::task::spawn_blocking(move || crate::actions::preflight(&spec).map_err(|e| format!("{e:#}")))
         .await
         .unwrap_or_else(|e| Err(e.to_string()));
-    let (phrase, why) = confirm_phrase(&st, id);
+    let (strict, why) = confirm_kind(&st, id);
+    let phrase = crate::actions::confirm_word(strict);
     let (spec, ..) = match action_of(&st, id) {
         Ok(x) => x,
         Err(r) => return *r,
@@ -1020,9 +1023,10 @@ pub async fn action_execute(State(st): St, AxPath(id): AxPath<u32>, Json(body): 
         Ok(x) => (x.0.clone(), x.1, x.2),
         Err(r) => return *r,
     };
-    let (phrase, _) = confirm_phrase(&st, id);
-    if body.confirm.trim() != phrase {
-        return err(StatusCode::BAD_REQUEST, format!("confirmation does not match: type `{phrase}` to proceed"));
+    let (strict, _) = confirm_kind(&st, id);
+    if !crate::actions::confirmed(&body.confirm, strict) {
+        let word = crate::actions::confirm_word(strict);
+        return err(StatusCode::BAD_REQUEST, format!("confirmation does not match: type `{word}` to proceed"));
     }
     let st2 = st.clone();
     let res = tokio::task::spawn_blocking(move || {

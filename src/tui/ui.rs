@@ -116,7 +116,9 @@ pub fn hints(app: &App) -> &'static str {
         }
         Tab::Workloads if app.work.focus_paths => "↑↓ pick path · Enter open in Files · Esc back",
         Tab::Workloads => "↑↓ move · Space/←→ expand · Enter paths · g open in Files · d cleanup · ? help · q quit",
-        Tab::Reclaim => "↑↓ move · Space mark · a mark safe · Enter preview · x run · g workload · ? help · q quit",
+        Tab::Reclaim => {
+            "↑↓ move · Space mark · a/A mark safe/all · Enter preview · x run · g workload · ? help · q quit"
+        }
         Tab::Diff => "↑↓ move · Enter open path · [ older baseline · ] newer baseline · ? help · q quit",
         Tab::Physical | Tab::Reconcile => "↑↓ move · Enter open in Files · 1-6/Tab switch view · ? help · q quit",
     }
@@ -164,9 +166,9 @@ pub const HELP: &[(&str, &str)] = &[
     ("g / d", "open first path in Files / cleanup preview"),
     ("", ""),
     ("Reclaim", ""),
-    ("Space / a", "mark item / mark all safe items (running total at the top)"),
-    ("Enter", "preview: reason, exact steps, preflight check"),
-    ("x", "run marked items (or the current one) after typing a confirmation"),
+    ("Space / a / A", "mark item / mark all safe items / mark everything (running total at the top)"),
+    ("Enter", "preview marked (or current) items: reason, exact steps, preflight check"),
+    ("x", "run marked (or current) items: type yes, or delete for danger items / as root"),
     ("", ""),
     ("Physical / Reconcile / Diff", ""),
     ("Enter", "open the selected filesystem / directory in Files"),
@@ -208,7 +210,7 @@ fn draw_popup(app: &App, area: Rect, buf: &mut Buffer) {
                 .block(Block::bordered().title(" cleanup preview "))
                 .render(r, buf);
         }
-        Popup::Confirm { items, required, input } => {
+        Popup::Confirm { items, strict, input } => {
             let mut lines = reclaim::preview_lines(app, items, &[]);
             let total: u64 = items.iter().map(|&i| app.reclaim[i].bytes).sum();
             lines.push(Line::default());
@@ -221,7 +223,7 @@ fn draw_popup(app: &App, area: Rect, buf: &mut Buffer) {
             ))]));
             lines.push(Line::from(vec![
                 Span::raw("Type "),
-                Span::styled(required.clone(), theme::bold().patch(theme::warn())),
+                Span::styled(crate::actions::confirm_word(*strict), theme::bold().patch(theme::warn())),
                 Span::raw(" and press Enter to run, Esc to cancel:"),
             ]));
             lines.push(Line::from(vec![Span::styled("> ", theme::bold()), Span::raw(input.clone()), Span::raw("▏")]));

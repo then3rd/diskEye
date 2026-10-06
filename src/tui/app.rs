@@ -43,8 +43,17 @@ impl Tab {
 
 pub enum Popup {
     Help,
-    Preview { items: Vec<usize>, checks: Vec<Result<(), String>>, scroll: u16 },
-    Confirm { items: Vec<usize>, required: String, input: String },
+    Preview {
+        items: Vec<usize>,
+        checks: Vec<Result<(), String>>,
+        scroll: u16,
+    },
+    /// `strict`: needs [`crate::actions::STRICT_WORD`] rather than `yes`.
+    Confirm {
+        items: Vec<usize>,
+        strict: bool,
+        input: String,
+    },
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -233,17 +242,8 @@ impl App {
                 return;
             }
         }
-        let danger = items.iter().any(|&i| self.reclaim[i].risk == Risk::Danger);
-        if items.len() > 1 && (danger || self.run_as_root) {
-            self.set_status("danger items (or any item when running as root) must be run one at a time", Level::Warn);
-            return;
-        }
-        let required = if danger || self.run_as_root {
-            self.snap.entities[self.reclaim[items[0]].entity as usize].name.clone()
-        } else {
-            "yes".to_string()
-        };
-        self.popup = Some(Popup::Confirm { items, required, input: String::new() });
+        let strict = self.run_as_root || items.iter().any(|&i| self.reclaim[i].risk == Risk::Danger);
+        self.popup = Some(Popup::Confirm { items, strict, input: String::new() });
     }
 
     /// Record the outcome of running reclaim item `i`.
@@ -320,7 +320,7 @@ impl App {
                 KeyCode::Up | KeyCode::Char('k') => *scroll = scroll.saturating_sub(1),
                 _ => self.popup = None,
             },
-            Popup::Confirm { items, required, input } => match k.code {
+            Popup::Confirm { items, strict, input } => match k.code {
                 KeyCode::Esc => {
                     self.popup = None;
                     self.set_status("cancelled — nothing changed", Level::Info);
@@ -329,7 +329,7 @@ impl App {
                     input.pop();
                 }
                 KeyCode::Enter => {
-                    if input.trim() == required.as_str() {
+                    if crate::actions::confirmed(input, *strict) {
                         self.pending_exec = Some(items.clone());
                         self.popup = None;
                     } else {
@@ -603,6 +603,17 @@ impl App {
         }
     }
 
+    /// The marked reclaim items, or the selected one when nothing is marked.
+    fn recl_targets(&self) -> Vec<usize> {
+        if self.recl.marked.is_empty() {
+            vec![self.recl.sel]
+        } else {
+            let mut v: Vec<usize> = self.recl.marked.iter().copied().collect();
+            v.sort_unstable();
+            v
+        }
+    }
+
     fn on_reclaim_key(&mut self, k: KeyEvent) -> bool {
         let n = self.reclaim.len();
         if n == 0 {
@@ -625,9 +636,14 @@ impl App {
                 }
                 self.recl.sel = (i + 1).min(n - 1);
             }
-            KeyCode::Char('a') => {
+            KeyCode::Char(c @ ('a' | 'A')) => {
+                // `a` toggles every safe item, `A` every item that has an action.
                 let safe: Vec<usize> = (0..n)
-                    .filter(|&i| self.reclaim[i].risk == Risk::Safe && !self.done.contains(&self.reclaim[i].entity))
+                    .filter(|&i| {
+                        let it = &self.reclaim[i];
+                        (if c == 'a' { it.risk == Risk::Safe } else { it.action.is_some() })
+                            && !self.done.contains(&it.entity)
+                    })
                     .collect();
                 if safe.iter().all(|i| self.recl.marked.contains(i)) {
                     for i in safe {
@@ -638,15 +654,11 @@ impl App {
                 }
             }
             KeyCode::Enter | KeyCode::Char('d') => {
-                let i = self.recl.sel;
-                self.open_preview(vec![i]);
+                let items = self.recl_targets();
+                self.open_preview(items);
             }
             KeyCode::Char('x') => {
-                let items: Vec<usize> = if self.recl.marked.is_empty() {
-                    vec![self.recl.sel]
-                } else {
-                    self.recl.marked.iter().copied().collect()
-                };
+                let items = self.recl_targets();
                 self.request_exec(items);
             }
             KeyCode::Char('g') => {

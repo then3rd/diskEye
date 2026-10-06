@@ -58,7 +58,7 @@ diskeye report  [SNAPSHOT] [--json]      summary of a saved snapshot
 diskeye tui     [SNAPSHOT]               terminal UI
 diskeye serve   [SNAPSHOT] [--port N]    web UI (localhost only, token-protected)
 diskeye diff    [OLD] [NEW]              what grew/shrank between snapshots, and who owns it
-diskeye clean   --list | ID [--dry-run]  reclaim space for a listed item
+diskeye clean   --list | ID... [--safe]  reclaim space for listed items (--safe: every safe one)
 diskeye export  --path P [-o F]          ncdu-compatible JSON (`ncdu -f F`)
 diskeye providers                        what was detected and how complete each view is
 diskeye snapshots                        list saved snapshots
@@ -76,7 +76,8 @@ Snapshots live in `~/.local/state/diskeye/snapshots`. Under `sudo` they are save
 
 - Everything is read-only unless you run an action from `diskeye clean`, the TUI or the web UI.
 - Each action shows the exact commands or API calls first, and is checked before it runs. Protected system paths are refused.
-- Plain `yes` confirms ordinary items. `danger` items, and anything run as root, need the item's name typed.
+- Plain `yes` confirms ordinary items. If a batch contains a `danger` item, or you run as root, you type `delete` instead.
+- You can run several items at once: mark them in the TUI (`Space`, `a` for all safe ones, `A` for all), tick them in the web UI, or pass several ids (or `--safe`) to `diskeye clean`. One confirmation covers the whole batch.
 - Every action is logged to `~/.local/state/diskeye/actions.log`.
 - Deleting a path moves it to the freedesktop Trash by default.
 - LVM and partition changes are never automated, only reported.

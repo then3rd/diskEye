@@ -6,6 +6,21 @@ use anyhow::{Context, Result, bail};
 use std::io::Write;
 use std::path::{Path, PathBuf};
 
+/// The word that confirms a batch containing `danger` items, or any batch when
+/// running as root. Ordinary batches only need `yes`.
+pub const STRICT_WORD: &str = "delete";
+
+/// What the user has to type to run a batch.
+pub fn confirm_word(strict: bool) -> &'static str {
+    if strict { STRICT_WORD } else { "yes" }
+}
+
+/// Whether `input` confirms a batch. The strict word is always accepted.
+pub fn confirmed(input: &str, strict: bool) -> bool {
+    let t = input.trim();
+    t.eq_ignore_ascii_case(STRICT_WORD) || (!strict && (t.eq_ignore_ascii_case("yes") || t.eq_ignore_ascii_case("y")))
+}
+
 /// Paths that must never be deleted, whatever a rule or provider says.
 const PROTECTED: &[&str] = &[
     "/",

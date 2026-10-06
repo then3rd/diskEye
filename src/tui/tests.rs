@@ -581,8 +581,8 @@ fn owner_jump_and_cleanup_flow() {
     }
     // x → confirmation needing "yes".
     key(&mut app, KeyCode::Char('x'));
-    let Some(Popup::Confirm { required, .. }) = &app.popup else { panic!("confirm popup") };
-    assert_eq!(required, "yes");
+    let Some(Popup::Confirm { strict, .. }) = &app.popup else { panic!("confirm popup") };
+    assert!(!strict);
     let out = render(&mut app, 140, 40);
     assert!(out.contains("Type yes"), "{out}");
     keys(&mut app, "no");
@@ -619,34 +619,41 @@ fn reclaim_marks_and_danger_confirmation() {
     assert!(app.popup.is_none());
     let st = &app.status.as_ref().unwrap().0;
     assert!(st.contains("lv_vm_test") && st.contains("cannot run"), "{st}");
-    // Danger item alone needs its name typed.
+    // A danger item needs `delete`, not `yes`.
     key(&mut app, KeyCode::Esc); // clears marks
     assert!(app.recl.marked.is_empty());
     key(&mut app, KeyCode::End);
     key(&mut app, KeyCode::Char('x'));
-    let Some(Popup::Confirm { required, .. }) = &app.popup else { panic!("confirm popup: {:?}", app.status) };
-    assert_eq!(required, "disk.qcow2");
+    let Some(Popup::Confirm { strict, .. }) = &app.popup else { panic!("confirm popup: {:?}", app.status) };
+    assert!(strict);
+    let out = render(&mut app, 140, 30);
+    assert!(out.contains("Type delete"), "{out}");
     keys(&mut app, "yes");
     key(&mut app, KeyCode::Enter);
     assert!(app.pending_exec.is_none(), "typing yes is not enough for danger items");
-    // Batch containing a danger item is refused.
+    // A batch with a danger item runs together after one `delete`.
     key(&mut app, KeyCode::Char(' '));
     key(&mut app, KeyCode::Home);
     key(&mut app, KeyCode::Char(' '));
     key(&mut app, KeyCode::Char('x'));
-    assert!(app.popup.is_none());
-    assert!(app.status.as_ref().unwrap().0.contains("one at a time"));
-    // Root: even safe items need the name.
+    assert!(matches!(app.popup, Some(Popup::Confirm { strict: true, .. })), "{:?}", app.status);
+    keys(&mut app, "delete");
+    key(&mut app, KeyCode::Enter);
+    assert_eq!(app.pending_exec.take(), Some(vec![0, 2]));
+    // Root: even safe items need `delete`.
     app.run_as_root = true;
     app.recl.marked.clear();
     app.recl.sel = 0;
     key(&mut app, KeyCode::Char('x'));
-    let Some(Popup::Confirm { required, .. }) = &app.popup else { panic!("confirm popup") };
-    assert_eq!(required, "Package cache");
+    assert!(matches!(app.popup, Some(Popup::Confirm { strict: true, .. })));
     let out = render(&mut app, 140, 30);
     assert!(out.contains("running as root"), "{out}");
     key(&mut app, KeyCode::Esc);
     assert!(app.popup.is_none());
+    // `A` marks every item that has an action.
+    app.run_as_root = false;
+    key(&mut app, KeyCode::Char('A'));
+    assert_eq!(app.recl.marked.len(), app.reclaim.iter().filter(|r| r.action.is_some()).count());
 }
 
 #[test]

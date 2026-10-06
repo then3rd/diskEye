@@ -299,6 +299,9 @@ input[type=text]:focus, select:focus { outline: 2px solid var(--accent); outline
 .result.bad { background: var(--crit-bg); color: var(--critical-ink); }
 .confirm-row { display: flex; gap: 8px; align-items: center; margin-top: 10px; }
 .confirm-row input { flex: 1; font-family: var(--mono); }
+.batch { max-height: 55vh; overflow: auto; margin-top: 8px; }
+.batch-item + .batch-item { border-top: 1px solid var(--grid); padding-top: 8px; margin-top: 8px; }
+.batch-item details { margin-top: 2px; }
 
 @media (max-width: 1000px) {
   .top { gap: 10px; }

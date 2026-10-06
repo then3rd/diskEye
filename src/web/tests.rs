@@ -325,14 +325,13 @@ async fn reclaim_preview_and_execute() {
     let r = get(&f, "/api/reclaim").await;
     assert_eq!(r["items"][0]["done"]["ok"], true);
 
-    // Danger items need the entity's name, not "yes".
+    // Danger items need `delete`, not "yes".
     let (_, p) = call(&f, "POST", "/api/action/2/preview", None, true).await;
-    assert_eq!(p["confirm"]["phrase"], "testvm-disk");
+    assert_eq!(p["confirm"]["phrase"], "delete");
     let (s, _) = call(&f, "POST", "/api/action/2/execute", Some(serde_json::json!({"confirm": "yes"})), true).await;
     assert_eq!(s, StatusCode::BAD_REQUEST);
     assert!(f.root.join("vm/disk.img").exists());
-    let (s, v) =
-        call(&f, "POST", "/api/action/2/execute", Some(serde_json::json!({"confirm": "testvm-disk"})), true).await;
+    let (s, v) = call(&f, "POST", "/api/action/2/execute", Some(serde_json::json!({"confirm": "delete"})), true).await;
     assert_eq!(s, StatusCode::OK, "{v}");
     assert!(!f.root.join("vm/disk.img").exists());
 
@@ -342,10 +341,10 @@ async fn reclaim_preview_and_execute() {
 }
 
 #[tokio::test]
-async fn root_server_requires_names() {
+async fn root_server_requires_delete() {
     let f = fixture(true);
     let (_, p) = call(&f, "POST", "/api/action/0/preview", None, true).await;
-    assert_eq!(p["confirm"]["phrase"], "test-cache");
+    assert_eq!(p["confirm"]["phrase"], "delete");
     let (s, _) = call(&f, "POST", "/api/action/0/execute", Some(serde_json::json!({"confirm": "yes"})), true).await;
     assert_eq!(s, StatusCode::BAD_REQUEST);
     assert_eq!(std::fs::read_dir(f.root.join("cache")).unwrap().count(), 2);

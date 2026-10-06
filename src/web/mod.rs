@@ -32,8 +32,8 @@ pub fn serve(snap: Snapshot, path: Option<PathBuf>, port: u16, open: bool, resca
         let url = format!("http://127.0.0.1:{port}/#token={token}");
         if is_root {
             eprintln!(
-                "\x1b[1;31m!! diskeye is serving as ROOT.\x1b[0m Cleanup actions run with full privileges and need the \
-                 item's name typed to confirm. Stop the server (Ctrl-C) when you're done."
+                "\x1b[1;31m!! diskeye is serving as ROOT.\x1b[0m Cleanup actions run with full privileges and need `delete` \
+                 typed to confirm. Stop the server (Ctrl-C) when you're done."
             );
         }
         eprintln!("diskeye web UI: {url}");

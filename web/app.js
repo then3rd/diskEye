@@ -13,7 +13,7 @@
     files: { id: null, metric: "alloc", color: "owner", chart: "treemap", data: null, limit: {}, chartApi: null, busy: 0 },
     cache: new Map(),
     wl: { data: null, open: new Set(), detail: new Map() },
-    reclaim: { filter: "all", data: null },
+    reclaim: { filter: "all", data: null, sel: new Set() },
     diff: { against: "", threshold: "100M" },
   };
   const TABS = ["overview", "physical", "files", "workloads", "reclaim", "diff"];
@@ -147,7 +147,7 @@
       `${DK.count(s.counts.nodes)} items · ${(m.duration_ms / 1000).toFixed(1)}s`;
     $("#meta").title = s.snapshot_path || "";
     if (s.server_root) {
-      banner("root", "⚠ This server runs as <b>root</b>. Cleanup actions run with full privileges and need the item's name typed to confirm. Stop the server when you're done.");
+      banner("root", "⚠ This server runs as <b>root</b>. Cleanup actions run with full privileges and need <code>delete</code> typed to confirm. Stop the server when you're done.");
     }
     return s;
   }
@@ -746,16 +746,29 @@
   function drawReclaim() {
     const v = $("#view-reclaim");
     const rc = S.reclaim.data;
+    const R = S.reclaim;
     const risks = ["safe", "review", "danger"];
     const sum = (r) => rc.items.filter((i) => r === "all" || i.risk === r).reduce((s, i) => s + i.bytes, 0);
     const cnt = (r) => rc.items.filter((i) => r === "all" || i.risk === r).length;
-    const f = S.reclaim.filter;
+    const f = R.filter;
     const items = rc.items.filter((i) => f === "all" || i.risk === f);
-    v.innerHTML = `<div class="card"><h2>Reclaimable space <span class="sub">nothing runs until you preview an item and confirm it</span></h2>
-      <div class="filters">${["all", ...risks].map((r) => `<button class="btn ${f === r ? "on" : ""}" data-filter="${r}">${r === "all" ? "All" : chip(r)} <span class="muted small">${cnt(r)} · ${size(sum(r))}</span></button>`).join("")}</div>
-      ${!items.length ? `<div class="empty">Nothing to show${f !== "all" ? " for this risk level" : ""}.</div>` : `<div class="tablewrap"><table class="t fixed"><colgroup><col style="width:84px"><col style="width:84px"><col><col style="width:150px"><col style="width:190px"><col style="width:200px"><col style="width:96px"></colgroup>
-        <thead><tr><th>Risk</th><th class="num">Frees</th><th>Item</th><th>Group</th><th>Why</th><th>Action</th><th></th></tr></thead><tbody>${items.map((i) => `
+    const runnable = (i) => i.has_action && !(i.done && i.done.ok);
+    // Forget selections that are no longer runnable (e.g. done after a rescan).
+    const byId = new Map(rc.items.map((i) => [i.entity, i]));
+    R.sel.forEach((id) => { if (!byId.has(id) || !runnable(byId.get(id))) R.sel.delete(id); });
+    const sel = [...R.sel].map((id) => byId.get(id));
+    const visible = items.filter(runnable);
+    const allOn = visible.length > 0 && visible.every((i) => R.sel.has(i.entity));
+    v.innerHTML = `<div class="card"><h2>Reclaimable space <span class="sub">nothing runs until you preview the items and confirm</span></h2>
+      <div class="filters">${["all", ...risks].map((r) => `<button class="btn ${f === r ? "on" : ""}" data-filter="${r}">${r === "all" ? "All" : chip(r)} <span class="muted small">${cnt(r)} · ${size(sum(r))}</span></button>`).join("")}
+        <span class="spacer" style="flex:1"></span>
+        <button class="btn small" id="sel-safe">Select all safe</button>
+        ${sel.length ? `<button class="btn small" id="sel-clear">Clear</button>` : ""}
+        <button class="btn ${sel.some((i) => i.risk !== "safe") ? "danger" : "primary"}" id="run-sel" ${sel.length ? "" : "disabled"}>Run selected${sel.length ? ` (${sel.length} · ${size(sel.reduce((s, i) => s + i.bytes, 0))})` : ""}…</button></div>
+      ${!items.length ? `<div class="empty">Nothing to show${f !== "all" ? " for this risk level" : ""}.</div>` : `<div class="tablewrap"><table class="t fixed"><colgroup><col style="width:34px"><col style="width:84px"><col style="width:84px"><col><col style="width:150px"><col style="width:190px"><col style="width:200px"><col style="width:96px"></colgroup>
+        <thead><tr><th><input type="checkbox" id="sel-all" aria-label="Select all shown" ${allOn ? "checked" : ""} ${visible.length ? "" : "disabled"}></th><th>Risk</th><th class="num">Frees</th><th>Item</th><th>Group</th><th>Why</th><th>Action</th><th></th></tr></thead><tbody>${items.map((i) => `
         <tr class="${i.done && i.done.ok ? "done" : ""}">
+          <td>${runnable(i) ? `<input type="checkbox" data-sel="${i.entity}" aria-label="Select ${esc(i.name)}" ${R.sel.has(i.entity) ? "checked" : ""}>` : ""}</td>
           <td>${chip(i.risk)}</td><td class="num">${size(i.bytes)}</td>
           <td><div class="ellipsis" title="${esc(i.name)}">${esc(i.name)} <span class="muted small">${esc(i.kind_label)}</span></div>${i.paths.map((p) => `<div class="small ellipsis" title="${esc(p.path)}">${filesLink(p.node, p.path)}</div>`).join("")}</td>
           <td class="small">${esc(i.group)}</td>
@@ -763,8 +776,18 @@
           <td class="small"><div class="ellipsis" title="${esc(i.action ? i.action.steps.join("\n") : "")}">${i.action ? esc(i.action.label) : '<span class="muted">manual</span>'}</div>${i.done ? `<div class="small ${i.done.ok ? "" : "up-ink"}">${i.done.ok ? "✓ done" : "✗ failed"}</div>` : ""}</td>
           <td>${i.has_action ? `<button class="btn small" data-preview="${i.entity}">Preview…</button>` : ""}</td></tr>`).join("")}</tbody></table></div>`}
       <div class="muted small" style="margin-top:8px">Sizes are from the snapshot; after cleaning, rescan to refresh the numbers. Every executed action is logged to <code>~/.local/state/diskeye/actions.log</code>.</div></div>`;
-    v.querySelectorAll("[data-filter]").forEach((b) => b.addEventListener("click", () => { S.reclaim.filter = b.dataset.filter; drawReclaim(); }));
-    v.querySelectorAll("[data-preview]").forEach((b) => b.addEventListener("click", () => preview(Number(b.dataset.preview))));
+    v.querySelectorAll("[data-filter]").forEach((b) => b.addEventListener("click", () => { R.filter = b.dataset.filter; drawReclaim(); }));
+    v.querySelectorAll("[data-preview]").forEach((b) => b.addEventListener("click", () => preview([Number(b.dataset.preview)])));
+    v.querySelectorAll("[data-sel]").forEach((c) => c.addEventListener("change", () => {
+      const id = Number(c.dataset.sel);
+      if (c.checked) R.sel.add(id); else R.sel.delete(id);
+      drawReclaim();
+    }));
+    const all = $("#sel-all");
+    if (all) all.addEventListener("change", () => { visible.forEach((i) => (all.checked ? R.sel.add(i.entity) : R.sel.delete(i.entity))); drawReclaim(); });
+    $("#sel-safe").addEventListener("click", () => { rc.items.filter((i) => i.risk === "safe" && runnable(i)).forEach((i) => R.sel.add(i.entity)); drawReclaim(); });
+    if ($("#sel-clear")) $("#sel-clear").addEventListener("click", () => { R.sel.clear(); drawReclaim(); });
+    $("#run-sel").addEventListener("click", () => preview(sel.map((i) => i.entity)));
   }
 
   function modal(html) {
@@ -776,38 +799,64 @@
   $("#modal").addEventListener("click", (ev) => { if (ev.target.id === "modal") closeModal(); });
   document.addEventListener("keydown", (ev) => { if (ev.key === "Escape" && !$("#modal").hidden) closeModal(); });
 
-  async function preview(id) {
+  // The server accepts `delete` for anything, and yes/y when no item is strict.
+  const confirmed = (text, strict) => {
+    const t = text.trim().toLowerCase();
+    return t === "delete" || (!strict && (t === "yes" || t === "y"));
+  };
+
+  /** Preview one or more reclaim items, confirm once, then run them in order. */
+  async function preview(ids) {
     modal(`<div class="loading">Checking…</div>`);
-    let p;
-    try { p = await api(`action/${id}/preview`, { method: "POST" }); } catch (e) { modal(`<div class="result bad">${esc(e.message)}</div>`); return; }
-    const phrase = p.confirm.phrase;
-    const why = p.confirm.reason === "danger" ? "This is a <b>danger</b> item: type its name to confirm."
-      : p.confirm.reason === "root" ? "The server runs as <b>root</b>: type the item's name to confirm." : "Type <code>yes</code> to confirm.";
-    modal(`<h3 id="modal-title">${esc(p.label)}</h3>
-      <div>${chip(p.risk)} <span class="ink2">${esc(p.entity.kind_label)}: <b>${esc(p.entity.name)}</b> · frees about <b>${size(p.bytes)}</b></span></div>
-      ${p.server_root ? `<div class="result bad" style="margin-top:10px">Running as root: these steps run with full privileges.</div>` : ""}
-      <div style="margin-top:12px" class="small muted">Exactly what will run:</div>
-      <div class="steps">${p.steps.map(esc).join("\n")}</div>
-      <div class="result ${p.preflight.ok ? "ok" : "bad"}">${p.preflight.ok ? "✓ Preflight passed: the action can run now." : "✗ Preflight failed: " + esc(p.preflight.error)}</div>
-      ${p.done ? `<div class="result ${p.done.ok ? "ok" : "bad"}">Already run in this session: ${esc(p.done.message)}</div>` : ""}
-      <div style="margin-top:12px" class="small">${why}</div>
-      <div class="confirm-row"><input type="text" id="confirm-input" placeholder="${esc(phrase)}" autocomplete="off" spellcheck="false" aria-label="Confirmation">
-        <button class="btn ${p.risk === "safe" ? "primary" : "danger"}" id="exec-btn" disabled>Run it</button></div>
+    let ps;
+    try {
+      ps = await Promise.all(ids.map((id) => api(`action/${id}/preview`, { method: "POST" }).then((p) => ({ id, ...p }))));
+    } catch (e) { modal(`<div class="result bad">${esc(e.message)}</div>`); return; }
+    ps.sort((a, b) => b.preflight.ok - a.preflight.ok); // runnable first
+    const ok = ps.filter((p) => p.preflight.ok);
+    const strict = ok.some((p) => p.confirm.phrase !== "yes");
+    const word = strict ? "delete" : "yes";
+    const total = ok.reduce((s, p) => s + p.bytes, 0);
+    const why = !strict ? "Type <code>yes</code> to confirm."
+      : ok.some((p) => p.confirm.reason === "danger") ? "Includes a <b>danger</b> item: type <code>delete</code> to confirm."
+      : "The server runs as <b>root</b>: type <code>delete</code> to confirm.";
+    const one = ps.length === 1;
+    const item = (p) => `<div class="batch-item" data-item="${p.id}">
+        <div>${chip(p.risk)} <span class="ink2">${esc(p.entity.kind_label)}: <b>${esc(p.entity.name)}</b> · ${esc(p.label)} · frees about <b>${size(p.bytes)}</b></span></div>
+        ${one ? `<div style="margin-top:12px" class="small muted">Exactly what will run:</div><div class="steps">${p.steps.map(esc).join("\n")}</div>`
+          : `<details><summary class="small muted">steps</summary><div class="steps">${p.steps.map(esc).join("\n")}</div></details>`}
+        ${p.preflight.ok ? (one ? `<div class="result ok">✓ Preflight passed: the action can run now.</div>` : "") : `<div class="result bad">✗ ${one ? "Preflight failed" : "Will be skipped"}: ${esc(p.preflight.error)}</div>`}
+        ${p.done ? `<div class="result ${p.done.ok ? "ok" : "bad"}">Already run in this session: ${esc(p.done.message)}</div>` : ""}
+        <div class="item-result"></div></div>`;
+    modal(`<h3 id="modal-title">${one ? esc(ps[0].label) : `Run ${ok.length} of ${ps.length} items · frees about ${size(total)}`}</h3>
+      ${ps.some((p) => p.server_root) ? `<div class="result bad" style="margin-top:10px">Running as root: these steps run with full privileges.</div>` : ""}
+      <div class="batch">${ps.map(item).join("")}</div>
+      ${ok.length ? `<div style="margin-top:12px" class="small">${why}</div>
+      <div class="confirm-row"><input type="text" id="confirm-input" placeholder="${word}" autocomplete="off" spellcheck="false" aria-label="Confirmation">
+        <button class="btn ${ok.every((p) => p.risk === "safe") ? "primary" : "danger"}" id="exec-btn" disabled>${one ? "Run it" : `Run ${ok.length}`}</button></div>` : ""}
       <div id="exec-result"></div>`);
+    if (!ok.length) return;
     const input = $("#confirm-input"), btn = $("#exec-btn");
     input.focus();
-    input.addEventListener("input", () => { btn.disabled = !p.preflight.ok || input.value.trim() !== phrase; });
+    input.addEventListener("input", () => { btn.disabled = !confirmed(input.value, strict); });
     input.addEventListener("keydown", (ev) => { if (ev.key === "Enter" && !btn.disabled) btn.click(); });
     btn.addEventListener("click", async () => {
       btn.disabled = true;
       input.disabled = true;
-      $("#exec-result").innerHTML = `<div class="loading">Running…</div>`;
-      try {
-        const r = await api(`action/${id}/execute`, { method: "POST", body: { confirm: input.value.trim() } });
-        $("#exec-result").innerHTML = `<div class="result ok">✓ ${esc(r.message)}</div>`;
-      } catch (e) {
-        $("#exec-result").innerHTML = `<div class="result bad">✗ ${esc(e.message)}</div>`;
+      let good = 0, freed = 0;
+      for (const p of ok) {
+        const out = $(`[data-item="${p.id}"] .item-result`);
+        out.innerHTML = `<div class="loading small">Running…</div>`;
+        try {
+          const r = await api(`action/${p.id}/execute`, { method: "POST", body: { confirm: input.value.trim() } });
+          out.innerHTML = `<div class="result ok">✓ ${esc(r.message)}</div>`;
+          good++; freed += p.bytes;
+          S.reclaim.sel.delete(p.id);
+        } catch (e) {
+          out.innerHTML = `<div class="result bad">✗ ${esc(e.message)}</div>`;
+        }
       }
+      if (!one) $("#exec-result").innerHTML = `<div class="result ${good === ok.length ? "ok" : "bad"}">${good} of ${ok.length} done, about ${size(freed)} freed. Rescan to refresh the numbers.</div>`;
       if (S.tab === "reclaim") reclaim().catch(showError("reclaim"));
     });
   }
